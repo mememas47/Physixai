@@ -1,0 +1,3399 @@
+
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;600;700&family=Cairo:wght@400;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>physiX AI  </title>
+  <style>
+    :root{
+      --bg:#fbf7ef;
+      --card:#ffffff;
+      --ink:#1f2937;
+      --muted:#6b7280;
+      --brand:#8b1d2c;
+      --brand2:#c23a4a;
+      --line:#e5e7eb;
+      --soft:#fff7f1;
+      --shadow: 0 10px 25px rgba(0,0,0,.08);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: 'Open Sans', sans-serif;
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(139,29,44,.15), transparent 60%),
+                  radial-gradient(900px 500px at 110% 10%, rgba(194,58,74,.12), transparent 60%),
+                  var(--bg);
+      color:var(--ink);
+    }
+    :lang(ar){
+      font-family: 'Cairo', sans-serif;
+      direction: rtl;
+    }
+    .card-buttons{
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      flex-wrap:wrap; /* يمنعهم يركبون فوق بعض */
+    }
+    .card-buttons button{
+      font-family: 'Cairo', sans-serif;
+      white-space: nowrap;
+    }
+    header{
+      position:sticky; top:0; z-index:5;
+      background: linear-gradient(90deg, var(--brand), #6f1320);
+      color:#fff;
+      padding:14px 16px;
+      box-shadow: 0 6px 18px rgba(0,0,0,.12);
+    }
+    .topbar{
+      max-width:1100px;
+      margin:0 auto;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .brand{
+      display:flex; flex-direction:column; gap:2px;
+    }
+    .brand h1{
+      margin:0; font-size:18px; letter-spacing:.3px;
+    }
+    .brand p{
+      margin:0; font-size:12px; opacity:.9;
+    }
+    .navbtns{
+      display:flex; gap:8px; flex-wrap:wrap;
+    }
+    button, .chip{
+      border:0;
+      border-radius:999px;
+      padding:10px 12px;
+      background:rgba(255,255,255,.12);
+      color:#fff;
+      cursor:pointer;
+      font-weight:600;
+      transition:.15s;
+    }
+    button:hover{transform:translateY(-1px); background:rgba(255,255,255,.18)}
+    button:active{transform:translateY(0px)}
+    .container{
+      max-width:1100px;
+      margin:18px auto 60px;
+      padding:0 16px;
+    }
+    
+    .hero{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+      margin-top:16px;
+    }
+    
+    .panel{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:16px;
+    }
+    .panel h2{margin:0 0 6px; font-size:18px}
+    .panel p{margin:0; color:var(--muted); line-height:1.6}
+    .pillrow{
+      display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;
+    }
+    .pill{
+      background:var(--soft);
+      border:1px dashed rgba(139,29,44,.35);
+      color:var(--brand);
+      padding:8px 10px;
+      border-radius:999px;
+      font-weight:700;
+      font-size:12px;
+    }
+
+    .grid{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:16px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+justify-items: center;
+
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:0;
+      cursor:pointer;
+      transition:.15s;
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      min-height:auto;
+    }
+.card{
+  width:100%;
+  max-width:280px;   /* حجم مريح وواضح */
+}
+    .card:hover{transform:translateY(-2px); box-shadow: 0 15px 35px rgba(0,0,0,.12)}
+    
+  .card-image{
+  width:100%;
+  height:240px;                 /* نفس ارتفاع الرسم */
+  
+  background-size: contain;     /* الصورة كاملة */
+  background-repeat: no-repeat;
+  background-position: center;
+
+  background-color:#fff;        /* إطار أبيض نظيف */
+  border-bottom:1px solid var(--line);
+}
+    
+    .card-content{
+      padding:12px 18px 18px 18px;
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      overflow-wrap:break-word;
+      word-wrap:break-word;
+    }
+    
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-weight:800;
+      color:var(--brand);
+      margin-bottom:10px;
+    }
+    .badge span{
+      background:rgba(139,29,44,.10);
+      border:1px solid rgba(139,29,44,.25);
+      padding:4px 10px;
+      border-radius:999px;
+      font-size:12px;
+      color:var(--brand);
+    }
+    .card h3{margin:0 0 6px; font-size:14px; line-height:1.4}
+    .card p{margin:0 0 8px 0; color:var(--muted); line-height:1.5; font-size:11px}
+ .card .sub{
+  margin-top:10px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+    .mini{
+      font-size:11px;
+      background:#f3f4f6;
+      color:#111827;
+      padding:5px 8px;
+      border-radius:999px;
+      border:1px solid #e5e7eb;
+      font-weight:700;
+    }
+
+    .hidden{display:none !important}
+    .toolbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+    .crumb{
+      color:var(--muted);
+      font-size:13px;
+    }
+    .tabs{
+      display:flex; gap:8px; flex-wrap:wrap;
+    }
+    .tab{
+      background:var(--card);
+      border:1px solid var(--line);
+      color:var(--ink);
+      padding:9px 12px;
+      border-radius:999px;
+      cursor:pointer;
+      font-weight:800;
+      font-size:13px;
+    }
+    .tab.active{
+      border-color:rgba(139,29,44,.4);
+      background:rgba(139,29,44,.08);
+      color:var(--brand);
+    }
+
+    .section{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    .section .panel h3{margin:0 0 10px; font-size:16px}
+    label{display:block; font-weight:800; margin:10px 0 6px}
+    textarea, input, select{
+      width:100%;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      font-size:14px;
+      outline:none;
+      background:#fff;
+    }
+    textarea{min-height:120px; resize:vertical}
+    .row{display:flex; gap:10px; flex-wrap:wrap}
+    .row > *{flex:1}
+    .cta{
+      background:linear-gradient(90deg, var(--brand), var(--brand2));
+      color:#fff;
+      border:0;
+      padding:10px 14px;
+      border-radius:12px;
+      font-weight:900;
+      cursor:pointer;
+      box-shadow:0 10px 18px rgba(139,29,44,.18);
+      font-size:13px;
+    }
+    .cta:hover{filter:brightness(1.05)}
+    .out{
+      background:#0b1220;
+      color:#dbeafe;
+      border-radius:14px;
+      padding:12px;
+      border:1px solid rgba(255,255,255,.08);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      white-space:pre-wrap;
+      min-height:140px;
+      font-size:12px;
+    }
+    .note{
+      margin-top:8px;
+      color:var(--muted);
+      font-size:11px;
+      line-height:1.6;
+    }
+
+    .labBox{
+      background:linear-gradient(180deg, #fff, #fff7f1);
+      border:1px solid rgba(139,29,44,.15);
+      border-radius:var(--radius);
+      padding:14px;
+    }
+    .sliderWrap{
+      display:grid;
+      grid-template-columns: 1fr 140px;
+      gap:10px;
+      align-items:center;
+      margin:10px 0;
+    }
+    input[type="range"]{width:100%}
+    .kpi{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:10px;
+      margin-top:10px;
+    }
+    .kpi .k{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:10px;
+      font-size:12px;
+    }
+    .k strong{display:block; color:var(--brand); font-size:12px}
+    .k span{color:var(--muted); font-size:11px}
+    canvas{
+      width:100%;
+      height:240px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:#fff;
+      margin-top:10px;
+    }
+
+
+    /* Calculator modal */
+    .modalOverlay{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.35);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:9999;
+      padding:18px;
+    }
+    .modalCard{
+      width:min(380px, 92vw);
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:18px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .modalHead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:12px 14px;
+      background:linear-gradient(90deg, var(--brand), var(--brand2));
+      color:#fff;
+      font-weight:900;
+    }
+    .modalHead button{
+      background:rgba(255,255,255,.18);
+      padding:8px 10px;
+      border-radius:12px;
+    }
+    .calcScreen{
+      background:#0b1220;
+      color:#dbeafe;
+      padding:12px 14px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size:16px;
+      min-height:56px;
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      overflow:auto;
+      white-space:nowrap;
+    }
+    .calcKeys{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:10px;
+      padding:12px;
+    }
+    .calcKey{
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--ink);
+      border-radius:14px;
+      padding:12px 10px;
+      font-weight:900;
+      cursor:pointer;
+    }
+    .calcKey.op{background:rgba(139,29,44,.08); border-color:rgba(139,29,44,.25); color:var(--brand)}
+    .calcKey.eq{
+  background:linear-gradient(90deg, var(--brand), var(--brand2));
+  color:#fff;
+  border:0;
+}
+    .calcKey.wide{grid-column: span 2}
+
+
+    @media (max-width: 920px){
+      .hero{grid-template-columns:1fr}
+      .grid{grid-template-columns:1fr}
+      .section{grid-template-columns:1fr}
+      .kpi{grid-template-columns:1fr}
+    }
+  
+:root{
+  --dark-blue:#0b3c5d;
+  --light-cyan:#bfeaf2;
+  --white:#ffffff;
+}
+
+body{
+  background: linear-gradient(180deg, var(--white), var(--light-cyan));
+  color: var(--dark-blue);
+}
+
+header.app-header{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:16px 20px;
+  margin-bottom:20px;
+}
+
+header.app-header img{
+  width:72px;
+  height:auto;
+}
+
+.card, .panel{
+  background: var(--white);
+  border: 2px solid var(--light-cyan);
+}
+
+button{
+  background: var(--dark-blue);
+  color: var(--white);
+}
+
+button.secondary{
+  background: var(--light-cyan);
+  color: var(--dark-blue);
+}
+
+
+
+/* === Kid-friendly iPad App Theme (override) === */
+:root{
+  --dark-blue:#0b3c5d;
+  --sky:#7dd3fc;
+  --light-cyan:#cfefff;
+  --white:#ffffff;
+
+  /* override existing tokens */
+  --bg: var(--white);
+  --card: var(--white);
+  --ink: var(--dark-blue);
+  --muted:#1f5772;
+  --brand: var(--dark-blue);
+  --brand2: #0f5f85;
+  --line: rgba(11,60,93,.10);
+  --soft: rgba(125,211,252,.18);
+  --shadow: 0 14px 30px rgba(11,60,93,.14);
+  --radius: 24px;
+}
+
+body{
+  margin: 0;
+  font-family: 'Baloo Bhaijaan 2','Cairo','Open Sans',system-ui,sans-serif !important;
+  background: #ffffff;
+  color: var(--ink);
+}
+
+.container{
+  max-width: 980px !important; /* feels like an iPad app width */
+  margin: 18px auto 80px !important;
+  padding: 0 18px !important;
+}
+
+/* App header */
+header.app-header{
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+  background: rgba(255,255,255,.72);
+  border-bottom: 1px solid rgba(11,60,93,.10);
+  border-radius: 0 0 26px 26px;
+  box-shadow: 0 10px 24px rgba(11,60,93,.10);
+  margin: 0 0 18px 0 !important;
+  padding: 14px 18px !important;
+}
+
+header.app-header img{
+  width: 68px !important;
+  height: 68px !important;
+  object-fit: cover;
+  border-radius: 18px;
+  background: rgba(125,211,252,.25);
+  border: 2px solid rgba(11,60,93,.10);
+  box-shadow: 0 10px 18px rgba(11,60,93,.12);
+}
+
+header.app-header h1{
+  margin: 0;
+  font-size: 30px;
+  letter-spacing: .2px;
+}
+
+header.app-header h1::after{
+  content: "⚡";
+  margin-inline-start: 10px;
+  font-size: 22px;
+  vertical-align: middle;
+}
+
+/* Panels/cards */
+.panel{
+  border: 2px solid rgba(125,211,252,.35) !important;
+  box-shadow: var(--shadow) !important;
+  padding: 18px !important;
+}
+
+.panel h2{
+  font-size: 20px !important;
+}
+
+.panel p{
+  font-size: 15px !important;
+}
+
+/* Inputs feel touch-friendly */
+input, select, textarea{
+  border-radius: 16px !important;
+  border: 2px solid rgba(125,211,252,.35) !important;
+  padding: 12px 14px !important;
+  font-size: 16px !important;
+  outline: none;
+  background: rgba(255,255,255,.92);
+}
+input:focus, select:focus, textarea:focus{
+  border-color: rgba(11,60,93,.35) !important;
+  box-shadow: 0 0 0 6px rgba(125,211,252,.25);
+}
+
+/* Buttons: big, pill, iPad-friendly */
+button{
+  border-radius: 999px !important;
+  padding: 12px 16px !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 12px 18px rgba(11,60,93,.14) !important;
+  border: 0 !important;
+  background: linear-gradient(180deg, #0b3c5d, #0f5f85) !important;
+}
+button:hover{ transform: translateY(-1px); }
+button:active{ transform: translateY(0px); }
+
+/* If there are "secondary" buttons, make them sky */
+button.secondary, .btn-secondary{
+  background: linear-gradient(180deg, rgba(125,211,252,.95), rgba(125,211,252,.75)) !important;
+  color: var(--dark-blue) !important;
+}
+
+/* Little rounded “chips/pills” */
+.pill, .tag, .chip{
+  border-radius: 999px !important;
+  border: 2px solid rgba(125,211,252,.35) !important;
+  background: rgba(125,211,252,.18) !important;
+}
+
+/* Canvas area */
+canvas{
+  border-radius: 22px !important;
+  border: 2px solid rgba(125,211,252,.35) !important;
+  box-shadow: 0 14px 30px rgba(11,60,93,.12);
+}
+
+/* Safe areas for iPad (notched devices) */
+@supports (padding: max(0px)){
+  body{
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  header.app-header{
+    padding-top: max(14px, env(safe-area-inset-top));
+  }
+}
+
+
+
+/* === Mascot watermark + greeting bubble === */
+
+  background-repeat: no-repeat;
+  background-position: 85% 75%;
+  background-size: min(520px, 60vw);
+  opacity: 0.07; /* faint */
+  filter: saturate(0.9) contrast(1.05);
+}
+
+/* Ensure app content stays above watermark */
+body > *{ position: relative; z-index: 1; }
+
+/* Mascot greeter (bottom corner) */
+.mascot-greeter{
+  position: fixed;
+  right: 16px;
+  bottom: 18px;
+  z-index: 50;
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+}
+.mascot-greeter img{
+  width: 92px;
+  height: 92px;
+  border-radius: 24px;
+  border: 2px solid rgba(125,211,252,.35);
+  background: rgba(255,255,255,.75);
+  box-shadow: 0 14px 28px rgba(11,60,93,.16);
+}
+.mascot-bubble{
+  max-width: 280px;
+  background: rgba(255,255,255,.88);
+  border: 2px solid rgba(125,211,252,.35);
+  border-radius: 22px;
+  padding: 12px 14px;
+  box-shadow: 0 14px 30px rgba(11,60,93,.14);
+  font-size: 16px;
+  line-height: 1.35;
+}
+.mascot-bubble strong{
+  display:block;
+  margin-bottom: 4px;
+}
+.mascot-bubble::after{
+  content:"";
+  position:absolute;
+  right: 86px;
+  bottom: 18px;
+  width: 18px;
+  height: 18px;
+  background: rgba(255,255,255,.88);
+  border-left: 2px solid rgba(125,211,252,.35);
+  border-bottom: 2px solid rgba(125,211,252,.35);
+  transform: rotate(45deg);
+}
+.mascot-bubble-wrap{
+  position: relative;
+}
+.mascot-close{
+  position:absolute;
+  top: 6px;
+  left: 8px;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  border: 0;
+  background: rgba(125,211,252,.35);
+  color: rgba(11,60,93,.9);
+  box-shadow: none;
+  padding: 0;
+  font-weight: 800;
+  cursor: pointer;
+}
+.mascot-close:active{ transform: none; }
+
+
+/* === Clean Mascot + Speech Bubble === */
+.mascot-greeter{
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  z-index: 60;
+}
+
+.mascot-only{
+  width: 96px;
+  height: auto;
+}
+
+.speech-wrap{
+  position: relative;
+}
+
+.speech-bubble{
+  background: #ffffff;
+  color: #0b3c5d;
+  border-radius: 26px;
+  padding: 14px 18px;
+  font-size: 16px;
+  line-height: 1.4;
+  box-shadow: 0 14px 28px rgba(11,60,93,.18);
+  max-width: 280px;
+}
+
+.speech-bubble::after{
+  content: "";
+  position: absolute;
+  right: -8px;
+  bottom: 24px;
+  width: 18px;
+  height: 18px;
+  background: #ffffff;
+  transform: rotate(45deg);
+  box-shadow: 4px 4px 10px rgba(11,60,93,.08);
+}
+
+
+/* === Mascot Animations & Interaction === */
+@keyframes popIn {
+  from { opacity:0; transform: translateY(20px) scale(.9); }
+  to { opacity:1; transform: translateY(0) scale(1); }
+}
+
+@keyframes wave {
+  0% { transform: rotate(0deg); }
+  20% { transform: rotate(10deg); }
+  40% { transform: rotate(-8deg); }
+  60% { transform: rotate(10deg); }
+  80% { transform: rotate(-4deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.mascot-greeter {
+  animation: popIn .8s ease-out both;
+}
+
+.mascot-only {
+  transform-origin: bottom center;
+  animation: wave 3s ease-in-out infinite;
+}
+
+.ask-btn{
+  margin-top:10px;
+  background: linear-gradient(180deg,#0b3c5d,#0f5f85);
+  color:#fff;
+  border:0;
+  border-radius:999px;
+  padding:8px 14px;
+  font-size:14px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.ask-btn:active{ transform: scale(.97); }
+
+
+
+/* === Requested tweak: remove white top bar + move logo into red header === */
+header.app-header{ display:none !important; }
+
+.topbar .brand-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-direction: row; /* RTL-friendly: logo on the right of the name */
+}
+
+.topbar .logo{
+  width:64px;
+  height:64px;
+  object-fit:contain;
+  border-radius:10px;
+  background: rgba(255,255,255,.14);
+  padding:4px;
+}
+
+
+/* === Calculator: lighten ONLY the number text (keep button backgrounds as-is) === */
+.calcKey:not(.op):not(.eq){
+  color:#64748b !important; /* رقم أفتح */
+  font-weight:800;
+}
+
+
+/* === Calculator: unify text color (numbers + symbols) without changing buttons === */
+.calcKey{
+  color:#60a5fa !important; /* أزرق فاتح */
+  font-weight:800;
+}
+
+
+/* === Calculator: force ALL text (numbers + symbols like π () ^ etc.) to light blue === */
+.calcKeys, 
+.calcKeys *{
+  color:#60a5fa !important; /* أزرق فاتح موحّد */
+  font-weight:800;
+}
+
+
+/* === Calculator: numbers + all symbols EXACT same color === */
+.calcKey{
+  color:#60a5fa !important; /* أزرق فاتح موحّد للجميع */
+  font-weight:800;
+}
+
+
+/* === Calculator FINAL FIX: absolutely everything same color === */
+.calcKeys *{
+  color:#60a5fa !important; /* نفس لون العلامات تماماً */
+  font-weight:800 !important;
+}
+
+    /* calculator key palette override */
+    .calcKey{
+      background: var(--soft) !important;
+      color: var(--brand) !important;
+      border-color: rgba(139,29,44,.22) !important;
+    }
+    .calcKey.op{
+      background: rgba(31,41,55,.06) !important;
+      color: #1f2937 !important;
+      border-color: rgba(31,41,55,.18) !important;
+    }
+    .calcKey.eq{
+      color:#edf2f7 !important;
+      border:none !important;
+    }
+
+  /* Hide KPI/plot results panel; keep only dark explanation box */
+  .only-dark-results{display:none!important;}
+
+/* Keep chapter cards visible */
+#chaptersGrid{ display:grid !important; }
+
+/* Hide the removed CH1 linear lab UI */
+.hide-ch1-linear-lab{ display:none !important; }
+.hide-ch1-linear-lab *{ display:none !important; }
+/* اجعل زر = مثل زر π وبقية الأزرار */
+.calcKey.eq{
+  background: var(--soft) !important;
+  color: var(--brand) !important;
+  border: 1px solid rgba(139,29,44,.22) !important;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="topbar">
+    <div class="brand-row">
+  <img src="logo.png" alt="logo" class="logo">
+<div class="brand">
+      <h1>physiX AI </h1>
+      <p>ادرس • حل • جرّب • اكتشف — وفق فصول كتاب فيزياء 1 (أول ثانوي)</p>
+    </div>
+</div>
+
+    <div class="navbtns">
+      <button id="goHomeBtn" title="العودة للرئيسية" type="button">الرئيسية</button>
+      <button id="aboutBtn" title="عن التطبيق" type="button">عن التطبيق</button>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <!-- HOME -->
+  <div id="homeView">
+    <div class="hero">
+      <div class="panel">
+        <h2>physiX AI </h2>
+        <p>
+          منصة تعليمية تفاعلية تساعدك على فهم وحل مسائل فيزياء 1 بطريقة ذكية وممتعة.
+          اختر أي فصل من الفصول أدناه واستمتع بتجربة تعليمية شاملة تجمع بين الشرح والتطبيق العملي.
+        </p>
+        <div class="pillrow">
+
+        </div>
+      </div>
+    </div>
+
+    <div class="grid" id="chaptersGrid"></div>
+  </div>
+
+  <!-- CHAPTER -->
+  <div id="chapterView" class="hidden">
+    <div class="toolbar">
+      <div class="crumb" id="crumb"></div>
+      <div class="tabs">
+        <div class="tab active" data-tab="problems">✏️ حل المسائل</div>
+        <div class="tab" data-tab="lab">🧪 المعمل الافتراضي</div>
+        <div class="tab" data-tab="enrich">🌟 الإثراءات</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="panel" id="problemsPanel">
+        <h3>✏️ حل المسائل بالشرح خطوة بخطوة</h3>
+
+        <label>اختاري الدرس داخل الفصل</label>
+        <select id="lessonSelect"></select>
+
+        <label>اختاري سؤال جاهز (اختياري)</label>
+        <select id="questionSelect">
+          <option value="" disabled selected>— اختاري سؤالًا —</option>
+        </select>
+        <p class="note" style="margin-top:8px">
+          💡 اختاري سؤالًا جاهزًا ليظهر لك زر <b>تلميح</b> وزر <b>حل</b> مع الشرح.
+        </p>
+
+        <label>اكتبي المسألة هنا</label>
+        <textarea id="problemInput" placeholder="مثال: جسم كتلته 2 كجم تؤثر عليه قوة 10 نيوتن... احسبي التسارع."></textarea>
+
+        <div class="row">
+          <button class="cta" id="solveBtn" type="button">حلل و اشرح</button>
+          <button class="cta" id="hintBtn" style="background:linear-gradient(90deg,#1f2937,#111827)" type="button">أعطني تلميح</button>
+        </div>
+        <div style="margin-top:10px; display:flex; justify-content:flex-start;">
+          <button class="cta" id="openCalcBtn" style="background:linear-gradient(90deg,#2563eb,#1d4ed8)" type="button">🧮 آلة حاسبة</button>
+        </div>
+
+        <p class="note">
+          ✅ هذا الوضع يعمل Offline بردود تعليمية ذكية وقوالب حل.  
+          🔧 لتفعيل AI الحقيقي: اربطي زر الحل بخدمة API لاحقًا.
+        </p>
+      </div>
+
+      <div class="panel" id="resultPanel">
+        <h3>📊 النتيجة والشرح</h3>
+        <div class="out" id="aiOut">سيظهر شرح النتائج هنا.</div>
+      </div>
+    </div>
+
+    <!-- LAB PANEL -->
+    <div id="labPanel" class="hidden">
+      <!-- CH1 LABS (Chapter 1 only) -->
+      <div id="ch1LabContent" class="hidden">
+        <div class="panel">
+          <h3>🧪 تجارب الفصل الأول</h3>
+          <label>اختاري التجربة</label>
+          <select id="labSelectCh1">
+            <option value="">— اختاري تجربة —</option>
+            <option value="fall">🪙 هل تسقط جميع الأجسام بالسرعة نفسها؟</option>
+            <option value="spring">🌀 العلاقة بين الكتلة وطول النابض</option>
+          </select>
+          <p class="note">اختاري تجربة لعرض تفاصيلها.</p>
+        </div>
+
+        <!-- Experiment 1: Free fall (coins) -->
+        <div id="fallLabCard" class="panel hidden" style="display:none">
+          <h3>🪙 تجربة استقصائية: هل تسقط جميع الأجسام بالسرعة نفسها؟</h3>
+          <p><b>سؤال التجربة:</b> كيف يؤثر وزن الجسم في سرعة سقوطه؟</p>
+          <p><b>الأدوات:</b> عملة معدنية واحدة، عملتان ملتصقتان (شريط لاصق)، سطح آمن للسقوط.</p>
+
+          <p><b>الخطوات:</b></p>
+          <ol>
+            <li>ثبّتي ارتفاع الإسقاط (مثلاً 1 متر).</li>
+            <li>أسقطي <b>عملة واحدة</b> ولاحظي زمن وصولها للأرض.</li>
+            <li>الصقي <b>عملتين</b> معاً ثم أسقطيهما من نفس الارتفاع.</li>
+            <li>قارني زمن الوصول واستنتجي النتيجة.</li>
+          </ol>
+
+          <p><b>المتغيرات:</b></p>
+          <ul>
+            <li><b>المستقل:</b> الكتلة (عملة واحدة / عملتان).</li>
+            <li><b>التابع:</b> زمن السقوط (أو زمن الوصول للأرض).</li>
+            <li><b>الثوابت:</b> الارتفاع، طريقة الإسقاط، مكان السقوط.</li>
+          </ul>
+
+          <button class="cta" id="runFallBtn" type="button">تنفيذ التجربة</button>
+          <div class="out" id="fallResultOut">سيظهر الناتج هنا بعد تنفيذ التجربة.</div>
+        </div>
+
+        <!-- Experiment 2: Spring vs mass -->
+        <div id="springLabCard" class="panel hidden" style="display:none">
+          <h3>🌀 تجربة: العلاقة بين الكتلة وطول النابض</h3>
+          <p><b>سؤال التجربة:</b> كيف يؤثر عدد الحلقات المعدنية المعلقة في طول النابض؟</p>
+          <p><b>الأدوات:</b> نابض، حلقات معدنية متطابقة (1–5)، مسطرة/شريط قياس.</p>
+
+          <p><b>الخطوات:</b></p>
+          <ol>
+            <li>قيسي طول النابض وهو بدون حلقات (الطول الابتدائي).</li>
+            <li>علّقي <b>حلقة واحدة</b> وقيسي الطول، ثم كرري مع 2 ثم 3 حلقات.</li>
+            <li>ارسمي بيانياً العلاقة بين <b>عدد الحلقات</b> و<b>طول النابض</b>.</li>
+            <li>توقعي طول النابض عند 4 حلقات ثم 5 حلقات، ثم اختبري توقعك.</li>
+          </ol>
+
+          <p><b>المتغيرات:</b></p>
+          <ul>
+            <li><b>المستقل:</b> عدد الحلقات (يمثل الكتلة المعلقة).</li>
+            <li><b>التابع:</b> طول النابض.</li>
+            <li><b>الثوابت:</b> نوع النابض، طريقة القياس، مكان التعليق.</li>
+          </ul>
+
+          <label>اختاري عدد الحلقات المعدنية</label>
+          <div class="sliderWrap">
+            <input type="range" id="ringRange" min="1" max="5" value="1" />
+            <input type="number" id="ringVal" value="1" min="1" max="5" />
+          </div>
+
+          <button class="cta" id="runSpringBtn" type="button">تنفيذ التجربة</button>
+          <div class="out" id="springResultOut">اختاري “تنفيذ التجربة” لعرض القياس والرسم والاستنتاج…</div>
+
+          <canvas id="springPlot"></canvas>
+          <p class="note">يمثل الرسم العلاقة بين عدد الحلقات (المحور الأفقي) وطول النابض (المحور الرأسي).</p>
+        </div>
+      </div>
+
+      <!-- DEFAULT LAB (for other chapters) -->
+<!-- CH2 LABS (added) -->
+<div id="ch2LabContent" class="hidden">
+  <div class="panel">
+    <h3>🧪 تجارب الفصل الثاني</h3>
+    <label>اختاري التجربة</label>
+    <select id="labSelectCh2">
+      <option value="">— اختاري تجربة —</option>
+      <option value="cars">🚗🚙 تجربة استهلالية: أي السيارتين أسرع؟</option>
+      <option value="instv">🧭 متجهات السرعة اللحظية (حركة اهتزازية)</option>
+    </select>
+    <p class="note">اختاري تجربة واحدة لتظهر التفاصيل تحت (التنفيذ، الأدوات، الخطوات، التحليل/الاستنتاج).</p>
+  </div>
+
+  <!-- Experiment 1 -->
+  <div id="carsLabCard" class="panel hidden">
+    <h3>🚗🚙 تجربة استهلالية: أي السيارتين أسرع؟</h3>
+    <p><b>سؤال التجربة:</b> في سباق سيارتين لعبة، هل يمكنكِ معرفة أيهما أسرع؟</p>
+
+    <p><b>الأدوات:</b> سيارتان لعبة تعملان بالنابض (أو دفع)، شريط قياس/مسطرة، ساعة توقيت (اختياري)، شريط لاصق لتحديد خط البداية، سطح مستوٍ.</p>
+
+    <p><b>الخطوات:</b></p>
+    <ol>
+      <li>أحضري سيارتين لعبة تعملان بانضغاط النابض، وضعيهما على طاولة المختبر أو على أي سطح مستوٍ.</li>
+      <li>حددي خطاً لبداية السباق.</li>
+      <li>عبّئي نابضي السيارتين، ثم أطلقيهما من خط البداية في اللحظة نفسها.</li>
+      <li>لاحظي حركة السيارتين عن قرب لتحددي أيهما أسرع.</li>
+      <li>كرري التجربة واجمعي نوعاً واحداً من البيانات لدعم استنتاجك.</li>
+    </ol>
+
+    <p><b>أمثلة بيانات (للمقارنة):</b></p>
+    <ul>
+      <li><b>مسافة خلال 1 ثانية:</b> الحمراء (82 سم) — الزرقاء (76 سم).</li>
+      <li><b>زمن لقطع 1 متر:</b> الحمراء (1.14 ث) — الزرقاء (1.33 ث).</li>
+    </ul>
+
+    
+    <div class="labBox" style="margin:12px 0">
+      <label>مسافة السيارة الحمراء خلال زمن محدد (سم)</label>
+      <input type="number" id="redDistCm" value="82" step="1" />
+      <label>مسافة السيارة الزرقاء خلال نفس الزمن (سم)</label>
+      <input type="number" id="blueDistCm" value="76" step="1" />
+
+      <label>الزمن المستخدم للمسافتين (ث)</label>
+      <input type="number" id="bothTimeS" value="1" step="0.01" />
+
+      <hr style="border:none;border-top:1px solid var(--line);margin:10px 0">
+
+      <label>زمن السيارة الحمراء لقطع 1 متر (ث)</label>
+      <input type="number" id="redTime1m" value="1.14" step="0.01" />
+      <label>زمن السيارة الزرقاء لقطع 1 متر (ث)</label>
+      <input type="number" id="blueTime1m" value="1.33" step="0.01" />
+    </div>
+    
+<button class="cta" id="runCarsBtn" type="button">تنفيذ التجربة</button>
+    <div class="out" id="carsResultOut">سيظهر الناتج هنا بعد تنفيذ التجربة.</div>
+
+    <p style="margin-top:10px"><b>الاستنتاج:</b> السيارة الأسرع هي التي تقطع <b>مسافة أكبر</b> في نفس الزمن، أو تحتاج <b>زمنًا أقل</b> لقطع نفس المسافة.</p>
+    <p class="note"><b>تعريف السرعة المتوسطة:</b> السرعة المتوسطة = المسافة المقطوعة ÷ الزمن المستغرق.</p>
+  </div>
+
+  <!-- Experiment 2 -->
+  <div id="instvLabCard" class="panel hidden">
+    <h3>🧭 تجربة: متجهات السرعة اللحظية (حركة اهتزازية)</h3>
+    <p><b>سؤال التجربة:</b> كيف يكون مقدار واتجاه السرعة اللحظية لجسم يهتز؟</p>
+
+    <p><b>الأدوات:</b> خيط طوله تقريباً 1 م، كتلة ذات خطّاف (أو ثقل صغير)، مساحة حركة آمنة.</p>
+
+    <p><b>الخطوات:</b></p>
+    <ol>
+      <li>اربطي أحد طرفي خيطٍ طوله 1 م بكتلةٍ ذات خطّاف.</li>
+      <li>أمسكي بيدك الطرف الآخر للخيط بحيث تتدلّى الكتلة في الهواء.</li>
+      <li>اسحبي الكتلة بحذر إلى أحد الجانبين ثم اتركيها.</li>
+      <li>لاحظي الحركة والسرعة واتجاه حركة الكتلة لعدة اهتزازات.</li>
+      <li>أوقفي الكتلة عن الاهتزاز.</li>
+      <li>ارسمي شكلاً توضيحياً تبيّنين فيه متجهات السرعة اللحظية عند نقاط مختلفة (القمة/المنتصف/القاع).</li>
+    </ol>
+
+    <p><b>التحليل والاستنتاج:</b></p>
+    <ul>
+      <li><b>أين تكون السرعة المتجهة أكبر ما يمكن؟</b> عند <b>أخفض نقطة</b> في مسار الاهتزاز.</li>
+      <li><b>أين تكون السرعة المتجهة أقل ما يمكن؟</b> عند <b>قمة المسار</b> وتساوي <b>صفراً</b>.</li>
+      <li><b>السرعة المتوسطة (تقريب):</b> يمكن تقديرها بمتجه السرعة عند <b>منتصف المسافة</b> بين أعلى وأخفض نقطة.</li>
+    </ul>
+
+    
+    <div class="labBox" style="margin:12px 0">
+      <label>اختاري نقطة على الحركة الاهتزازية</label>
+      <select id="instvPoint">
+        <option value="top">القمة (أعلى نقطة)</option>
+        <option value="midRight">المنتصف متجهة لليمين</option>
+        <option value="midLeft">المنتصف متجهة لليسار</option>
+        <option value="bottom">القاع (أدنى نقطة)</option>
+      </select>
+
+      <label>Δx (الإزاحة خلال فترة قصيرة) بالمتر</label>
+      <input type="number" id="instvDx" value="0.20" step="0.01" />
+
+      <label>Δt (الزمن) بالثانية</label>
+      <input type="number" id="instvDt" value="0.50" step="0.01" />
+    </div>
+    
+<button class="cta" id="runInstVBtn" type="button">تنفيذ التجربة</button>
+    <div class="out" id="instvResultOut">سيظهر الناتج هنا بعد تنفيذ التجربة.</div>
+  </div>
+</div>
+
+
+      <div id="defaultLabContent">
+
+      <div class="section">
+        <div class="panel hide-ch1-linear-lab">
+      <h3>معمل الحركة الخطية</h3>
+          <div class="labBox">
+            <label>السرعة الابتدائية (م/ث)</label>
+            <div class="sliderWrap">
+              <input type="range" id="vRange" min="0" max="30" value="5" />
+              <input type="number" id="vVal" value="5" />
+            </div>
+
+            <label>الزمن (ثانية)</label>
+            <div class="sliderWrap">
+              <input type="range" id="tRange" min="0" max="10" value="2" />
+              <input type="number" id="tVal" value="2" />
+            </div>
+
+            <label>التسارع (م/ث²)</label>
+            <div class="sliderWrap">
+              <input type="range" id="aRange" min="-5" max="5" value="1" step="0.1" />
+              <input type="number" id="aVal" value="1" step="0.1" />
+            </div>
+
+            <button class="cta" id="runLabBtn" type="button">شغّل المعمل</button>
+          </div>
+        </div>
+
+        <div class="panel only-dark-results">
+      <h3>📈 النتائج</h3>
+          <div class="kpi">
+            <div class="k">
+              <strong>الإزاحة (m)</strong>
+              <span id="sOut"> = 0 متر</span>
+            </div>
+            <div class="k">
+              <strong>السرعة النهائية (m/s)</strong>
+              <span id="vxOut"> = 0 م/ث</span>
+            </div>
+            <div class="k">
+              <strong>الاستنتاج</strong>
+              <span id="insightOut">اضبطي القيم وشغّلي المعمل</span>
+            </div>
+          </div>
+          <canvas id="plot"></canvas>
+        </div>
+      </div>
+
+      <div class="panel" id="labResultsPanel">
+        <h3>📝 شرح النتائج</h3>
+        <div class="out" id="labOut">🧪 اضبطي القيم وشغّلي المعمل… وسيظهر الشرح هنا.</div>
+      </div>
+      </div>
+
+    </div>
+
+    <!-- ENRICH PANEL -->
+    <div id="enrichPanel" class="hidden">
+      <div class="section">
+        <div class="panel">
+          <h3>🌟 الإثراءات</h3>
+          <label>اختاري نوع الإثراء</label>
+          <select id="enrichType">
+            <option value="concept">مفهوم متقدم</option>
+            <option value="history">تاريخ الفيزياء</option>
+            <option value="realworld">تطبيقات حقيقية</option>
+            <option value="challenge">تحدي إضافي</option>
+          </select>
+          <button class="cta" id="genEnrichBtn" style="margin-top:12px" type="button">توليد إثراء</button>
+        </div>
+
+        <div class="panel">
+          <h3>📚 المحتوى</h3>
+          <div class="out" id="enrichOut">اختري نوع إثراء واضغطي التوليد…</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div id="aboutView" class="hidden">
+    <div class="panel">
+      <h2>عن التطبيق</h2>
+      <p>
+   تطبيق تعليمي ذكي لفيزياء 1 (أول ثانوي) يوفر:
+      </p>
+      <ul>
+        <li><b>حل مسائل:</b> اكتبي المسألة واحصلي على شرح خطوة بخطوة.</li>
+        <li><b>معمل افتراضي:</b> جربي المعادلات والقوانين بشكل تفاعلي.</li>
+        <li><b>إثراءات:</b> محتوى إضافي عن المفاهيم والتطبيقات.</li>
+      </ul>
+      <button id="backFromAbout" class="cta" type="button">العودة للرئيسية</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- CALCULATOR MODAL -->
+<div id="calcModal" class="modalOverlay hidden" aria-hidden="true">
+  <div class="modalCard" role="dialog" aria-modal="true" aria-label="آلة حاسبة">
+    <div class="modalHead">
+      <div>🧮 آلة حاسبة</div>
+      <button id="closeCalcBtn" title="إغلاق">✕</button>
+    </div>
+    <div class="calcScreen" id="calcScreen">0</div>
+    <div class="calcKeys" id="calcKeys">
+      <button class="calcKey op" data-k="C">C</button>
+      <button class="calcKey op" data-k="(">(</button>
+      <button class="calcKey op" data-k=")">)</button>
+      <button class="calcKey op" data-k="DEL">⌫</button>
+
+      <button class="calcKey" data-k="7">7</button>
+      <button class="calcKey" data-k="8">8</button>
+      <button class="calcKey" data-k="9">9</button>
+      <button class="calcKey op" data-k="÷">÷</button>
+
+      <button class="calcKey" data-k="4">4</button>
+      <button class="calcKey" data-k="5">5</button>
+      <button class="calcKey" data-k="6">6</button>
+      <button class="calcKey op" data-k="×">×</button>
+
+      <button class="calcKey" data-k="1">1</button>
+      <button class="calcKey" data-k="2">2</button>
+      <button class="calcKey" data-k="3">3</button>
+      <button class="calcKey op" data-k="−">−</button>
+
+      <button class="calcKey" data-k="0">0</button>
+      <button class="calcKey" data-k=".">.</button>
+      <button class="calcKey op" data-k="π">π</button>
+      <button class="calcKey op" data-k="+">+</button>
+
+      <button class="calcKey op" data-k="√">√</button>
+      <button class="calcKey op" data-k="^2">x²</button>
+      <button class="calcKey eq wide" data-k="=">=</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  const chapters = [
+    {
+      id:"ch1",
+      title:"الفصل 1: مدخل إلى علم الفيزياء",
+      image:"ch1-intro.jpg",
+      lessons:[
+        {id:"1-1", name:"الدرس الأول (1-1): ما الفيزياء"},
+        {id:"1-2", name:"الدرس الثاني (1-2): الكميات الفيزيائية"},
+        {id:"ch1_eval", name:"تقويم الفصل الأول"},
+        {id:"ch1_exam", name:"الاختبار المقنن للفصل الأول"}
+      ],
+      focus:"المفاهيم الأساسية، الوحدات، القياس."
+    },
+    {
+      id:"ch2",
+      title:"الفصل 2: تمثيل الحركة",
+      image:"ch2-motion.jpg",
+      lessons:[
+        {id:"2-1", name:"الدرس الأول (2-1): تصوير الحركة"},
+        {id:"2-2", name:"الدرس الثاني (2-2): الموقع والزمن"},
+        {id:"2-3", name:"الدرس الثالث (2-3): منحنى الموقع–الزمن"},
+        {id:"2-4", name:"الدرس الرابع (2-4): السرعة المتجهة"},
+        {id:"ch2_eval", name:"تقويم الفصل الثاني "},
+        {id:"ch2_exam", name:"الاختبار المقنن للفصل الثاني"}
+      ],
+      focus:"الحركة الخطية، المتجهات، الرسوم البيانية."
+    },
+    {
+      id:"ch3",
+      title:"الفصل 3: الحركة المتسارعة بانتظام",
+      image:"ch3-vectors.jpg",
+      lessons:[
+        {id:"3-1", name:"3-1 التسارع المنتظم"},
+        {id:"3-2", name:"3-2 معادلات الحركة"},
+        {id:"3-3", name:"3-3 السقوط الحر"}
+      ],
+      focus:"معادلات الحركة، التسارع الثابت، السقوط الحر."
+    },
+    {
+      id:"ch4",
+      title:"الفصل 4: القوى في بعد واحد",
+      image:"ch4-forces.jpg",
+      lessons:[
+        {id:"4-1", name:"4-1 القوة والحركة"},
+        {id:"4-2", name:"4-2 استخدام قوانين نيوتن"},
+        {id:"4-3", name:"4-3 قوى التأثير المتبادل"}
+      ],
+      focus:"قوانين نيوتن، مخططات الجسم الحر، التفاعل."
+    },
+    {
+      id:"ch5",
+      title:"الفصل 5: القوى في بعدين",
+      image:"ch5-applications.jpg",
+      lessons:[
+        {id:"5-1", name:"5-1 المتجهات"},
+        {id:"5-2", name:"5-2 الاحتكاك"},
+        {id:"5-3", name:"5-3 القوة والحركة في بعدين"}
+      ],
+      focus:"تحليل المتجهات، الاحتكاك، الحركة على مستوى مائل."
+    },
+    {
+      id:"ch6",
+      title:"الفصل 6: الحركة في بعدين",
+      image:"ch6-2d.jpg",
+      lessons:[
+        {id:"6-1", name:"6-1 حركة المقذوف"},
+        {id:"6-2", name:"6-2 الحركة الدائرية"},
+        {id:"6-3", name:"6-3 السرعة المتجهة النسبية"}
+      ],
+      focus:"المقذوفات، الدائرية، الحركة النسبية."
+    },
+  ];
+
+  const homeView = document.getElementById("homeView");
+  const chapterView = document.getElementById("chapterView");
+  const aboutView = document.getElementById("aboutView");
+  const chaptersGrid = document.getElementById("chaptersGrid");
+  const crumb = document.getElementById("crumb");
+  const lessonSelect = document.getElementById("lessonSelect");
+  const questionSelect = document.getElementById("questionSelect");
+
+  // تحديث قائمة الأسئلة عند تغيير اختيار الدرس/التقويم/الاختبار
+  lessonSelect.addEventListener("change", () => {
+    selectedQuestion = null;
+    if(questionSelect) questionSelect.value = "";
+    refreshQuestionSelect();
+  });
+
+  const problemsPanel = document.getElementById("problemsPanel");
+  const labPanel = document.getElementById("labPanel");
+  const enrichPanel = document.getElementById("enrichPanel");
+  const aiOut = document.getElementById("aiOut");
+  const labOut = document.getElementById("labOut");
+  const problemInput = document.getElementById("problemInput");
+  const solveBtn = document.getElementById("solveBtn");
+  const hintBtn = document.getElementById("hintBtn");
+  const goHomeBtn = document.getElementById("goHomeBtn");
+  const aboutBtn = document.getElementById("aboutBtn");
+  const backFromAbout = document.getElementById("backFromAbout");
+  const vRange = document.getElementById("vRange");
+  const tRange = document.getElementById("tRange");
+  const aRange = document.getElementById("aRange");
+  const vVal = document.getElementById("vVal");
+  const tVal = document.getElementById("tVal");
+  const aVal = document.getElementById("aVal");
+  const runLabBtn = document.getElementById("runLabBtn");
+  const sOut = document.getElementById("sOut");
+  const vxOut = document.getElementById("vxOut");
+  const insightOut = document.getElementById("insightOut");
+  const canvas = document.getElementById("plot");
+  const ctx = canvas.getContext("2d");
+  // Chapter 1 labs UI
+  const ch1LabContent = document.getElementById("ch1LabContent");
+  const defaultLabContent = document.getElementById("defaultLabContent");
+  const labSelectCh1 = document.getElementById("labSelectCh1");
+  const fallLabCard = document.getElementById("fallLabCard");
+  const springLabCard = document.getElementById("springLabCard");
+  const runFallBtn = document.getElementById("runFallBtn");
+  const fallResultOut = document.getElementById("fallResultOut");
+
+  const ringRange = document.getElementById("ringRange");
+  const ringVal = document.getElementById("ringVal");
+  const runSpringBtn = document.getElementById("runSpringBtn");
+  const springResultOut = document.getElementById("springResultOut");
+  const springCanvas = document.getElementById("springPlot");
+  const springCtx = springCanvas.getContext("2d");
+
+
+  // لضبط دقة الرسم على الشاشات المختلفة (خصوصاً الآيباد)
+  function fitCanvas(cnv, desiredCssHeight=240){
+    if(!cnv) return;
+    const dpr = window.devicePixelRatio || 1;
+    // اجعل الارتفاع مطابقاً لـ CSS
+    cnv.style.height = desiredCssHeight + "px";
+    // اجعل العرض يتبع عرض العنصر في الصفحة
+    const cssW = cnv.clientWidth || cnv.parentElement?.clientWidth || 300;
+    const cssH = desiredCssHeight;
+    cnv.width  = Math.max(1, Math.floor(cssW * dpr));
+    cnv.height = Math.max(1, Math.floor(cssH * dpr));
+    const c = cnv.getContext("2d");
+    if(c) c.setTransform(dpr,0,0,dpr,0,0);
+  }
+
+  function fitAllCanvases(){
+    fitCanvas(canvas, 240);
+    fitCanvas(springCanvas, 240);
+  }
+  window.addEventListener("resize", fitAllCanvases);
+  // نادِها مرة عند التحميل
+  setTimeout(fitAllCanvases, 0);
+
+  function updateLabForChapter(){
+    const chId = (currentChapter && currentChapter.id) ? currentChapter.id : "";
+    const isCh1 = chId === "ch1";
+    const isCh2 = chId === "ch2";
+
+    const ch2LabContent = document.getElementById("ch2LabContent");
+    const defaultLabContent = document.getElementById("defaultLabContent");
+
+    const labResultsPanel = document.getElementById("labResultsPanel");
+
+    // فصل 1: اعرض تجارب الفصل الأول فقط
+    if(isCh1){
+      if(ch1LabContent) ch1LabContent.classList.remove("hidden");
+      if(ch2LabContent) ch2LabContent.classList.add("hidden");
+      if(defaultLabContent) defaultLabContent.classList.add("hidden");
+      if(labResultsPanel) labResultsPanel.classList.add("hidden");
+      return;
+    }
+
+    // فصل 2: اعرض تجارب الفصل الثاني فقط
+    if(isCh2){
+      if(ch1LabContent) ch1LabContent.classList.add("hidden");
+      if(ch2LabContent) ch2LabContent.classList.remove("hidden");
+      if(defaultLabContent) defaultLabContent.classList.add("hidden");
+      if(labResultsPanel) labResultsPanel.classList.remove("hidden");
+      return;
+    }
+
+    // باقي الفصول: اعرض المعمل الافتراضي الافتراضي
+    if(ch1LabContent) ch1LabContent.classList.add("hidden");
+    if(ch2LabContent) ch2LabContent.classList.add("hidden");
+    if(defaultLabContent) defaultLabContent.classList.remove("hidden");
+    if(labResultsPanel) labResultsPanel.classList.add("hidden");
+  }
+
+  function resetCh1LabView(){
+    if(labSelectCh1) labSelectCh1.value = "";
+    if(fallLabCard) fallLabCard.classList.add("hidden");
+    if(springLabCard) springLabCard.classList.add("hidden");
+    if(fallResultOut) fallResultOut.textContent = "سيظهر الناتج هنا بعد تنفيذ التجربة.";
+    if(springResultOut) springResultOut.textContent = "اختاري “تنفيذ التجربة” لعرض القياس والرسم والاستنتاج…";
+    if(ringRange){ ringRange.value = 1; }
+    if(ringVal){ ringVal.value = 1; }
+    drawSpringPlot(1);
+  }
+
+  // Sync range/number for rings
+  if(ringRange && ringVal){
+    ringRange.addEventListener("input", () => ringVal.value = ringRange.value);
+    ringVal.addEventListener("input", () => {
+      let v = Number(ringVal.value);
+      if(Number.isNaN(v)) v = 1;
+      v = Math.max(1, Math.min(5, v));
+      ringVal.value = v;
+      ringRange.value = v;
+    });
+  }
+
+  // Select experiment (Chapter 1)
+  if(labSelectCh1){
+    labSelectCh1.addEventListener("change", () => {
+      // hide all first
+      if(fallLabCard){ fallLabCard.classList.add("hidden"); fallLabCard.style.display="none"; }
+      if(springLabCard){ springLabCard.classList.add("hidden"); springLabCard.style.display="none"; }
+
+      // show selected
+      if(labSelectCh1.value === "fall" && fallLabCard){
+        fallLabCard.classList.remove("hidden");
+        fallLabCard.style.display="";
+      }
+      if(labSelectCh1.value === "spring" && springLabCard){
+        springLabCard.classList.remove("hidden");
+        springLabCard.style.display="";
+      }
+    });
+  }
+
+
+// Run fall experiment (simulated outcome)
+  function runFallLabSim(){
+    if(!fallResultOut) return;
+    fallResultOut.textContent =
+      "📌 الملاحظة: وصلت العملة الواحدة والعملتان (الملتصقتان) للأرض في وقت متقارب جداً عند إسقاطهما من نفس الارتفاع.\n\n" +
+      "✅ الاستنتاج: في السقوط الحر (مع إهمال مقاومة الهواء) تسقط الأجسام بالتسارع نفسه g، لذلك لا يعتمد زمن السقوط على الكتلة.";
+    const aiOutBox = document.getElementById("aiOut");
+  if(aiOutBox) aiOutBox.textContent = "🪙 نتيجة تجربة السقوط الحر\n\n" + fallResultOut.textContent;
+}
+  if(runFallBtn) runFallBtn.addEventListener("click", runFallLabSim);
+
+  // Spring experiment model and plot
+  // نفترض طول ابتدائي 10 سم، وكل حلقة تزيد الطول 2 سم (نموذج تعليمي مبسط)
+  function springLength(rings){
+    return 10 + rings * 2;
+  }
+
+  function runSpringLabSim(){
+    const r = ringVal ? Number(ringVal.value) : 1;
+    const L = springLength(r);
+    if(springResultOut){
+      springResultOut.textContent =
+        `📏 القياس: عند تعليق ${r} حلقة/حلقات → طول النابض ≈ ${L.toFixed(1)} سم.\n\n` +
+        "✅ الاستنتاج: يزداد طول النابض بزيادة الكتلة المعلقة (علاقة طردية تقريباً).";
+    }
+  const aiOutBox = document.getElementById("aiOut");
+  if(aiOutBox && springResultOut) aiOutBox.textContent = "🌀 نتيجة تجربة النابض\n\n" + springResultOut.textContent;
+    drawSpringPlot(r);
+  }
+  if(runSpringBtn) runSpringBtn.addEventListener("click", runSpringLabSim);
+
+  function drawSpringPlot(currentRings){
+    if(!springCanvas) return;
+    const W = springCanvas.clientWidth || 300, H = 240;
+    springCtx.clearRect(0,0,W,H);
+
+    const padL=70, padR=20, padT=20, padB=55;
+    const plotW = W - padL - padR;
+    const plotH = H - padT - padB;
+
+    // data points 1..5
+    const pts = [];
+    let yMax = 0;
+    for(let r=1;r<=5;r++){
+      const y = springLength(r);
+      pts.push({x:r, y});
+      yMax = Math.max(yMax, y);
+    }
+    const yMin = 0;
+    yMax = Math.max(1, yMax);
+
+    // axes
+    springCtx.strokeStyle = "#ddd";
+    springCtx.lineWidth = 1;
+    springCtx.beginPath();
+    springCtx.moveTo(padL, padT);
+    springCtx.lineTo(padL, H-padB);
+    springCtx.lineTo(W-padR, H-padB);
+    springCtx.stroke();
+
+    // line
+    springCtx.strokeStyle = "#8b1d2c";
+    springCtx.lineWidth = 2;
+    springCtx.beginPath();
+    pts.forEach((p,i)=>{
+      const px = padL + ((p.x-1)/(5-1))*plotW;
+      const py = (H-padB) - ((p.y-yMin)/(yMax-yMin))*plotH;
+      if(i===0) springCtx.moveTo(px,py);
+      else springCtx.lineTo(px,py);
+    });
+    springCtx.stroke();
+
+    // highlight current point
+    const p = pts.find(z=>z.x===currentRings) || pts[0];
+    const hx = padL + ((p.x-1)/(5-1))*plotW;
+    const hy = (H-padB) - ((p.y-yMin)/(yMax-yMin))*plotH;
+    springCtx.fillStyle = "#8b1d2c";
+    springCtx.beginPath();
+    springCtx.arc(hx, hy, 5, 0, Math.PI*2);
+    springCtx.fill();
+  }
+
+  const enrichType = document.getElementById("enrichType");
+  const genEnrichBtn = document.getElementById("genEnrichBtn");
+  const enrichOut = document.getElementById("enrichOut");
+
+  // Calculator (popup)
+  const openCalcBtn = document.getElementById("openCalcBtn");
+  const calcModal = document.getElementById("calcModal");
+  const closeCalcBtn = document.getElementById("closeCalcBtn");
+  const calcScreen = document.getElementById("calcScreen");
+  const calcKeys = document.getElementById("calcKeys");
+  let calcExpr = "";
+
+  function openCalc(){
+    if(!calcModal) return;
+    calcModal.classList.remove("hidden");
+    calcModal.setAttribute("aria-hidden","false");
+    updateCalcScreen();
+  }
+  function closeCalc(){
+    if(!calcModal) return;
+    calcModal.classList.add("hidden");
+    calcModal.setAttribute("aria-hidden","true");
+  }
+  function updateCalcScreen(){
+    if(!calcScreen) return;
+    calcScreen.textContent = calcExpr.trim() ? calcExpr : "0";
+  }
+
+  function computeExpr(expr){
+    let s = (expr || "").trim();
+    if(!s) return "";
+    // normalize symbols
+    s = s.replaceAll("×","*").replaceAll("÷","/").replaceAll("−","-");
+    // square token: append **2 to the previous term
+    s = s.replace(/\^2/g, "**2");
+    // sqrt: √( ... ) => Math.sqrt( ... )
+    s = s.replaceAll("√(", "Math.sqrt(");
+    // √number => Math.sqrt(number)
+    s = s.replace(/√\s*([0-9.]+)/g, "Math.sqrt($1)");
+    // pi
+    s = s.replaceAll("π", "Math.PI");
+
+    // implicit multiplication:
+    // 2π   -> 2*Math.PI
+    // π2   -> Math.PI*2
+    // 2(3) -> 2*(3)
+    // )(   -> )*(
+    // )π   -> )*Math.PI
+    // π(   -> Math.PI*(
+    s = s.replace(/(\d|\))\s*(Math\.PI|Math\.sqrt|\()/g, "$1*$2");
+    s = s.replace(/(Math\.PI|\))\s*(\d)/g, "$1*$2");
+    s = s.replace(/(Math\.PI)\s*(\()/g, "$1*$2");
+    s = s.replace(/(\))\s*(Math\.PI)/g, "$1*$2");
+
+    // allow only Math.PI and Math.sqrt as lettered tokens
+    const safe = s.replaceAll("Math.PI","").replaceAll("Math.sqrt","");
+    // reject any other letters/underscores
+    if(/[A-Za-z_]/.test(safe)) return null;
+    // only allow a safe subset of remaining characters
+    if(/[^0-9+\-*/().\s]/.test(safe)) return null;
+
+    try{
+      const val = Function('"use strict"; return (' + s + ')')();
+      if(!Number.isFinite(val)) return null;
+      return String(val);
+    }catch(e){
+      return null;
+    }
+  }
+
+  function handleKey(k){
+    if(k === "C"){
+      calcExpr = "";
+      updateCalcScreen();
+      return;
+    }
+    if(k === "DEL"){
+      calcExpr = calcExpr.slice(0, -1);
+      updateCalcScreen();
+      return;
+    }
+    if(k === "="){
+      const res = computeExpr(calcExpr);
+      calcExpr = (res === null) ? "خطأ" : res;
+      updateCalcScreen();
+      return;
+    }
+    if(k === "^2"){
+      // attach square marker
+      calcExpr += "^2";
+      updateCalcScreen();
+      return;
+    }
+    // if last result was "خطأ" and user types, reset
+    if(calcExpr === "خطأ") calcExpr = "";
+    calcExpr += k;
+    updateCalcScreen();
+  }
+
+  if(openCalcBtn) openCalcBtn.addEventListener("click", openCalc);
+  if(closeCalcBtn) closeCalcBtn.addEventListener("click", closeCalc);
+
+  // click outside closes
+  if(calcModal){
+    calcModal.addEventListener("click", (e) => {
+      if(e.target === calcModal) closeCalc();
+    });
+  }
+
+  // key buttons
+  if(calcKeys){
+    calcKeys.addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if(!btn) return;
+      const k = btn.getAttribute("data-k");
+      if(!k) return;
+      handleKey(k);
+    });
+  }
+
+  // ESC closes
+  document.addEventListener("keydown", (e) => {
+    if(e.key === "Escape" && calcModal && !calcModal.classList.contains("hidden")){
+      closeCalc();
+    }
+  });
+
+  const resultPanel = document.getElementById("resultPanel");
+  const tabs = Array.from(document.querySelectorAll(".tab"));
+  let currentChapter = null;
+
+  const questionBank = {
+    ch1: [
+      {
+        id:"1",
+        lesson:"1-1",
+        group:"chapter",
+        text:"مصباح مقاومته 50.0Ω موصول ببطارية 9.0V. احسبي شدة التيار.",
+        hint:"استخدمي قانون أوم: I = V/R.",
+        solution:"I = 9.0 / 50.0 = 0.18 A",
+      },
+      {
+        id:"2",
+        lesson:"1-1",
+        group:"chapter",
+        text:"دراجة تبدأ من السكون وتتسارع 6 m/s² لمدة 4 s. احسبي السرعة النهائية.",
+        hint:"إذا البداية من السكون: v = a t.",
+        solution:"v = 6×4 = 24 m/s",
+      },
+      {
+        id:"3",
+        lesson:"1-1",
+        group:"chapter",
+        text:"جسم يبدأ من السكون وصل إلى 4.0 m/s بعد قطع 0.400 m بتسارع ثابت. احسبي التسارع.",
+        hint:"استخدمي v² = v0² + 2 a Δx مع v0=0.",
+        solution:"a = v²/(2Δx) = 16/(0.8)=20 m/s²",
+      },
+      {
+        id:"4",
+        lesson:"1-1",
+        group:"chapter",
+        text:"قوة عمودية 520 N تؤثر على سطح، وكان الضغط 32500 N/m². احسبي المساحة.",
+        hint:"P = F/A ⇒ A = F/P.",
+        solution:"A = 520 / 32500 = 0.016 m²",
+      },
+      {
+        id:"5",
+        lesson:"1-1",
+        group:"chapter",
+        text:"لماذا نستخدم المعادلات لوصف مفاهيم الفيزياء؟",
+        hint:"فكري: المعادلة تربط متغيرات ويمكن اختبارها.",
+        solution:"لأنها تعطي علاقة كمية دقيقة بين المتغيرات وتسمح بالتنبؤ والتحقق بالتجربة.",
+      },
+      {
+        id:"6",
+        lesson:"1-1",
+        group:"chapter",
+        text:"استنتجي وحدة التسلا (T) من العلاقة F = B q v.",
+        hint:"أعيدي ترتيبها: B = F/(qv) ثم بدّلي الوحدات.",
+        solution:"وحدة B = N/(A·m) (وتكافئ kg/(A·s²)).",
+      },
+      {
+        id:"7",
+        lesson:"1-1",
+        group:"chapter",
+        text:"أعيدي ترتيب F = B q v لإيجاد السرعة v.",
+        hint:"اقسمي الطرفين على Bq.",
+        solution:"v = F/(Bq).",
+      },
+      {
+        id:"8",
+        lesson:"1-1",
+        group:"chapter",
+        text:"قيس g فكانت 9.4 m/s². هل القياس مقبول مقارنة بـ 9.80؟ عللي.",
+        hint:"احسبي نسبة الخطأ التقريبية.",
+        solution:"الفرق 0.40 ≈ 4%؛ غالبًا غير مقبول إن كانت أدواتك تسمح بخطأ أقل. قد يكون بسبب زمن الاستجابة/طول الخيط/زاوية الاهتزاز…",
+      },
+      {
+        id:"9",
+        lesson:"1-2",
+        group:"chapter",
+        text:"حوّلي 750 MHz إلى kHz.",
+        hint:"1 MHz = 1000 kHz.",
+        solution:"750 MHz = 750,000 kHz.",
+      },
+      {
+        id:"10",
+        lesson:"1-2",
+        group:"chapter",
+        text:"حوّلي 5201 cm إلى km.",
+        hint:"حوّلي إلى m ثم إلى km.",
+        solution:"5201 cm = 52.01 m = 0.05201 km.",
+      },
+      {
+        id:"11",
+        lesson:"1-2",
+        group:"chapter",
+        text:"كم ثانية في سنة كبيسة (366 يومًا)؟",
+        hint:"اضربي 366×24×60×60.",
+        solution:"31,622,400 s.",
+      },
+      {
+        id:"12",
+        lesson:"1-2",
+        group:"chapter",
+        text:"حوّلي 5.30 m/s إلى km/h.",
+        hint:"للتحويل من m/s إلى km/h اضربي في 3.6.",
+        solution:"5.30×3.6 = 19.08 ≈ 19.1 km/h.",
+      },
+      {
+        id:"13",
+        lesson:"1-2",
+        group:"chapter",
+        text:"احسبي قوة مغناطيسية على بروتون يتحرك عموديًا في مجال: استخدمي F = B q v.",
+        hint:"عوضي B و q=1.60×10⁻¹⁹ C و v ثم اضربي.",
+        solution:"F = B q v (مثال: 4.5×1.6e-19×2.4e5 ≈ 1.73×10⁻¹³ N).",
+      },
+      {
+        id:"14",
+        lesson:"1-2",
+        group:"chapter",
+        text:"مسطرة لا يبدأ صفرها من الحافة. ما أثر ذلك على القياس؟",
+        hint:"هذا يسمى خطأ صفري.",
+        solution:"ينتج انحراف ثابت في جميع القياسات؛ يجب طرح/إضافة إزاحة الصفر لتصحيح القراءة.",
+      },
+      {
+        id:"15",
+        lesson:"1-2",
+        group:"chapter",
+        text:"قارني ميكرومتر سيئ المعايرة بمسطرة جيدة من حيث الدقة والضبط.",
+        hint:"الدقة = صغر تدريج الجهاز، الضبط = قربه من القيمة الحقيقية.",
+        solution:"الميكرومتر أدق (تدرج أصغر) لكنه أقل ضبطًا بسبب سوء المعايرة؛ المسطرة أقل دقة لكنها قد تكون أضبط إن كانت معايرة.",
+      },
+      {
+        id:"16",
+        lesson:"1-2",
+        group:"chapter",
+        text:"هل اختلاف زاوية النظر يؤثر على القياس؟ وضحي.",
+        hint:"هذا خطأ اختلاف المنظر (Parallax).",
+        solution:"نعم؛ تغيير زاوية النظر يغيّر القراءة فتقل الدقة/يتدهور الضبط. الحل: النظر عموديًا على التدريج.",
+      },
+      {
+        id:"17",
+        lesson:"1-2",
+        group:"chapter",
+        text:"طول صديقك مكتوب 182 cm. ما دقة هذا القياس؟",
+        hint:"فكري: أقرب 1 cm يعني ± نصف تدريج.",
+        solution:"غالبًا مقاس لأقرب 1 cm ⇒ عدم يقين ≈ ±0.5 cm.",
+      },
+      {
+        id:"18",
+        lesson:"1-2",
+        group:"chapter",
+        text:"صندوق أبعاده 19.2 cm و20.3 cm و18.1 cm: احسبي الحجم، ثم ارتفاع 12 صندوقًا فوق بعض.",
+        hint:"V = LWH، وارتفاع 12 = 12×الارتفاع.",
+        solution:"V ≈ 19.2×20.3×18.1 = 7.05×10³ cm³. وارتفاع 12 صندوقًا = 217.2 cm.",
+      },
+      {
+        id:"19",
+        lesson:"1-2",
+        group:"chapter",
+        text:"قِيس زمن 7 دورات فكان المتوسط يعطي T=65.414 s وزمن القياس لأقرب 0.1 s. كيف تكتبين النتيجة بدقة مناسبة؟",
+        hint:"وزّعي عدم اليقين: ΔT ≈ 0.1/7.",
+        solution:"ΔT ≈ 0.014 s ⇒ T ≈ 65.41 ± 0.01 s (تقريب مناسب).",
+      },
+      {
+        id:"20",
+        lesson:"ch1_eval",
+        group:"chapter",
+        text:"رتّبي خطوات الطريقة العلمية.",
+        hint:"اكتبي: سؤال→فرضية→تجربة→تحليل→استنتاج→تكرار.",
+        solution:"ملاحظة/سؤال → فرضية → تجربة واختبار → تحليل بيانات → استنتاج → تعديل/تكرار.",
+      },
+      {
+        id:"21",
+        lesson:"ch1_eval",
+        group:"chapter",
+        text:"عرّفي الطريقة العلمية باختصار.",
+        hint:"كلمات مفتاحية: ملاحظة، فرضية، اختبار، تحليل.",
+        solution:"منهج منظم لاكتساب المعرفة يعتمد على الملاحظة وصياغة فرضيات واختبارها بالتجربة وتحليل النتائج.",
+      },
+      {
+        id:"22",
+        lesson:"ch1_eval",
+        group:"chapter",
+        text:"لماذا تعد الرياضيات مهمة في الفيزياء؟",
+        hint:"لأنها لغة العلاقات بين الكميات.",
+        solution:"لأنها تصف العلاقات بدقة، وتحوّل الظواهر إلى نماذج يمكن حسابها والتنبؤ بها.",
+      },
+      {
+        id:"23",
+        lesson:"ch1_eval",
+        group:"chapter",
+        text:"ما المقصود بالنظام الدولي للوحدات SI؟",
+        hint:"نظام موحّد للوحدات.",
+        solution:"نظام عالمي لتوحيد القياسات والوحدات لتسهيل التواصل والتحويلات.",
+      },
+      {
+        id:"24",
+        lesson:"ch1_eval",
+        group:"chapter",
+        text:"حوّلي/سمّي: 100 m و 1000 m و 1 m بوحدات مناسبة.",
+        hint:"استخدمي بادئات: hecto, kilo.",
+        solution:"100 m = 1 hm (أو 0.1 km)، 1000 m = 1 km، 1 m = 1 m.",
+      },
+      {
+        id:"25",
+        lesson:"ch1_eval",
+        group:"chapter",
+        text:"في تجربة تربط حجم بالون بدرجة الحرارة: حددي المتغير المستقل والتابع.",
+        hint:"المستقل هو ما تغيّرينه عمدًا.",
+        solution:"المستقل: درجة الحرارة. التابع: حجم البالون.",
+      },
+      {
+        id:"26",
+        lesson:"ch1_eval",
+        group:"chapter",
+        text:"من رسم بياني يُظهر أن المتغير التابع يزيد مع المستقل لكن ليس خطيًا: ما نوع العلاقة؟",
+        hint:"انظري هل هو خط مستقيم أم منحنى.",
+        solution:"علاقة طردية غير خطية (معدل الزيادة ليس ثابتًا).",
+      },
+      {
+        id:"27",
+        lesson:"ch1_eval",
+        group:"chapter",
+        text:"من F = m v² / r: صفّي اعتماد F على r و m و v.",
+        hint:"استخدمي التناسبات.",
+        solution:"مع r: عكسية؛ مع m: طردية؛ مع v: طردية تربيعية (∝ v²).",
+      },
+      {
+        id:"28",
+        lesson:"ch1_eval",
+        group:"chapter",
+        text:"ميّزي بين قانون ونظرية، وبين فرضية ونظرية.",
+        hint:"القانون يصف، النظرية تفسّر.",
+        solution:"القانون: وصف علاقة/نمط. النظرية: تفسير واسع مدعوم بأدلة. الفرضية: توقع قابل للاختبار؛ النظرية: تفسير راسخ.",
+      },
+      {
+        id:"29",
+        lesson:"ch1_eval",
+        group:"chapter",
+        text:"ما وحدة الكثافة في SI؟",
+        hint:"الكثافة = كتلة/حجم.",
+        solution:"kg/m³.",
+      },
+      {
+        id:"30",
+        lesson:"ch1_eval",
+        group:"chapter",
+        text:"عند قياسين للسرعة مع عدم يقين مختلف: أيهما أدق (precision) وأيهما أضبط (accuracy)؟",
+        hint:"الأدق: أصغر ±. الأضبط: الأقرب للقيمة المقبولة.",
+        solution:"الأدق: الأصغر عدم يقين. الأضبط: الأقرب للقيمة القياسية (حتى لو كان ± أكبر).",
+      },
+      {
+        id:"31",
+        lesson:"ch1_eval",
+        group:"chapter",
+        text:"كيف تقيسين طول جسم إذا لم يبدأ عند الصفر على المسطرة؟",
+        hint:"الطول = قراءة النهاية − قراءة البداية.",
+        solution:"خذي قراءتين (بداية/نهاية) ثم اطرحي: L = x₂ − x₁ مع ذكر عدم اليقين.",
+      },
+      {
+        id:"32",
+        lesson:"ch1_eval",
+        group:"chapter",
+        text:"جسم كتلته 41.63 kg: احسبي وزنه. ثم إذا كان الوزن 632 N احسبي الكتلة.",
+        hint:"W = mg و m = W/g.",
+        solution:"W ≈ 41.63×9.80 = 408 N. و m ≈ 632/9.80 = 64.5 kg.",
+      },
+      {
+        id:"33",
+        lesson:"ch1_eval",
+        group:"chapter",
+        text:"تحققي من الوحدات في (0.55 kg)(2.1 m/s)/(9.80 m/s²): ما وحدة الناتج؟ وهل هي ضغط؟",
+        hint:"بسّطي الوحدات: (kg·m/s)/(m/s²)=kg·s.",
+        solution:"الناتج بوحدة kg·s؛ ليست وحدة ضغط (Pa = N/m²).",
+      },
+      {
+        id:"34",
+        lesson:"ch1_eval",
+        group:"chapter",
+        text:"حوّلي إلى المتر: 42.3 cm، 6.2 pm، 21 km، 0.023 mm، 214 μm، 57 nm.",
+        hint:"استخدمي البادئات و 1 cm=1e-2 m…",
+        solution:"0.423 m؛ 6.2×10⁻¹² m؛ 2.10×10⁴ m؛ 2.3×10⁻⁵ m؛ 2.14×10⁻⁴ m؛ 5.7×10⁻⁸ m.",
+      },
+      {
+        id:"35",
+        lesson:"ch1_eval",
+        group:"chapter",
+        text:"كتلة إناء مع ماء 51.8 kg وكتلة الإناء 3.64 kg: ما كتلة الماء؟",
+        hint:"اطرحي كتلة الإناء الفارغ.",
+        solution:"m الماء = 51.8 − 3.64 = 48.16 kg.",
+      },
+      {
+        id:"36",
+        lesson:"ch1_eval",
+        group:"chapter",
+        text:"من قراءة ميزان يظهر منزلة عشرية واحدة بالجرام: ما أصغر تدريج؟",
+        hint:"إذا يعرض 0.1 g فهذه الدقة.",
+        solution:"أصغر تدريج تقريبًا 0.1 g (وعدم يقين تقريبي ±0.05 إلى ±0.1 g).",
+      },
+      {
+        id:"37",
+        lesson:"ch1_eval",
+        group:"chapter",
+        text:"اقرئي قيمة تدريج في جهاز قياس (حسب الشكل في كتابك) مع تقدير عدم اليقين.",
+        hint:"اقرئي أقرب تدريج ثم ± نصفه.",
+        solution:"اكتبي القراءة لأقرب تدريج واذكري عدم يقين ≈ نصف أصغر تدريج.",
+      },
+      {
+        id:"38",
+        lesson:"ch1_eval",
+        group:"chapter",
+        text:"من رسم كتلة-حجم لثلاث مواد A,B,C: استنتجي الكتلة عند حجم معين، والحجم عند كتلة معينة، وما الذي يمثله ميل الخط.",
+        hint:"الميل = Δm/ΔV = الكثافة.",
+        solution:"اقرئي القيم من الرسم. ميل الخط يمثل الكثافة (كلما زاد الميل زادت الكثافة).",
+      },
+      {
+        id:"39",
+        lesson:"ch1_eval",
+        group:"chapter",
+        text:"تجربة سحب جسم لمسافة مختلفة رغم نفس الكتلة: ما السبب المحتمل؟ وكيف تتحققين؟",
+        hint:"فكري بالاحتكاك ونوع السطح.",
+        solution:"السبب اختلاف الاحتكاك/السطح. للتحقق: ثبتي القوة والكتلة وغيّري السطح وكرري القياس.",
+      },
+      {
+        id:"40",
+        lesson:"ch1_eval",
+        group:"chapter",
+        text:"إذا كان عدد القطرات 1.7×10²¹ ويتبخر 10⁶ قطرة/ث: احسبي الزمن بالسنوات.",
+        hint:"t = N/المعدل ثم حوّلي للسنوات.",
+        solution:"t = 1.7×10¹⁵ s ≈ 5.4×10⁷ سنة ≈ 54 مليون سنة.",
+      },
+      {
+        id:"41",
+        lesson:"ch1_eval",
+        group:"chapter",
+        text:"حوض أبعاده 1.4 m × 0.600 m × 0.340 m. احسبي كتلة الماء عند ρ=1000 kg/m³.",
+        hint:"احسبي الحجم ثم m=ρV.",
+        solution:"V=0.2856 m³ ⇒ m=285.6 kg ≈ 286 kg.",
+      },
+      {
+        id:"42",
+        lesson:"ch1_eval",
+        group:"chapter",
+        text:"صممي تجربة لقياس ارتفاع ارتداد كرة بعد إسقاطها.",
+        hint:"ثبتي كل شيء إلا متغير واحد وكرري القياس.",
+        solution:"حددي المتغير (السطح/الارتفاع)، ثبتي الكرة والطريقة، كرري 5 مرات، استخدمي مسطرة/تصوير بطيء، احسبي المتوسط والانحراف.",
+      },
+      {
+        id:"43",
+        lesson:"ch1_eval",
+        group:"chapter",
+        text:"اكتبي فقرة قصيرة عن تطور الفيزياء ودور الطريقة العلمية.",
+        hint:"اذكري: قوانين→نظريات→تطبيقات→أدوات قياس.",
+        solution:"فقرة تربط تطور الفيزياء عبر التاريخ بالطريقة العلمية: ملاحظة→فرضية→تجربة→قانون/نظرية وتطبيقات تقنية.",
+      },
+      {
+        id:"44",
+        lesson:"ch1_eval",
+        group:"chapter",
+        text:"كيف تحسّنين دقة قياس زمن سقوط جسم؟",
+        hint:"قلّلي خطأ رد الفعل وكرري.",
+        solution:"استخدمي بوابة ضوئية/حساس أو تصوير بطيء، كرري وخذي متوسطًا، زيدي المسافة وقللي تأثير الهواء.",
+      },
+      {
+        id:"MC-1",
+        lesson:"ch1_exam",
+        group:"scaled",
+        text:"الاختبار المقنن (سؤال 1): تحديد أي قياس أكثر ضبطًا عند وجود ± (عدم يقين) مختلف.",
+        hint:"الأصغر ± هو الأكثر ضبطًا.",
+        solution:"الأكثر ضبطًا هو ذو ± الأصغر (مثل ±40 أدق من ±50 من ناحية الضبط/precision).",
+      },
+      {
+        id:"MC-2",
+        lesson:"ch1_exam",
+        group:"scaled",
+        text:"الاختبار المقنن (سؤال 2): أي قيمة تكافئ 86.2 cm بوحدة أخرى؟",
+        hint:"حوّلي إلى m ثم إلى km.",
+        solution:"86.2 cm = 0.862 m = 8.62×10⁻⁴ km.",
+      },
+      {
+        id:"MC-3",
+        lesson:"ch1_exam",
+        group:"scaled",
+        text:"الاختبار المقنن (سؤال 3): إذا كانت المسافة بالكيلومتر والسرعة بالمتر/ث، كيف تحسب الزمن بالثواني؟",
+        hint:"حوّلي km إلى m ثم اقسمي على السرعة.",
+        solution:"t(s)= (d_km×1000)/v(m/s).",
+      },
+      {
+        id:"MC-4",
+        lesson:"ch1_exam",
+        group:"scaled",
+        text:"الاختبار المقنن (سؤال 4): أعيدي ترتيب معادلة الكثافة D=m/V لإيجاد V.",
+        hint:"اقسمي m على D.",
+        solution:"V = m/D.",
+      },
+      {
+        id:"MC-5",
+        lesson:"ch1_exam",
+        group:"scaled",
+        text:"الاختبار المقنن (سؤال 5): احسبي ميل خط مستقيم من نقطتين في الرسم.",
+        hint:"الميل = Δy/Δx.",
+        solution:"مثال: من (0,0) إلى (12,3): الميل=3/12=0.25.",
+      },
+      {
+        id:"MC-6",
+        lesson:"ch1_exam",
+        group:"scaled",
+        text:"الاختبار المقنن (سؤال 6): مسألة قوة وكتلة: استنتجي a من F و m وطبّقي مع تحويل g إلى kg.",
+        hint:"a = F/m، و 1 kg = 1000 g.",
+        solution:"إذا F=2.7 N و m=350 g=0.350 kg ⇒ a=2.7/0.350=7.7 m/s².",
+      },
+    ],
+    ch2: [
+      {
+        id:"1",
+        lesson:"2-1",
+        group:"chapter",
+        text:"ما المقصود بالحركة في الفيزياء؟",
+        hint:"ركزي على تغيّر الموقع مع الزمن ونقطة مرجعية.",
+        solution:"الحركة هي تغيّر موقع جسم بالنسبة لنقطة مرجعية مع مرور الزمن. إذا لم يتغير الموقع فالجسم ساكن.",
+      },
+      {
+        id:"2",
+        lesson:"2-1",
+        group:"chapter",
+        text:"لماذا نحتاج نقطة مرجعية لوصف الحركة؟",
+        hint:"تخيلي نفس الجسم داخل سيارة أو خارجها.",
+        solution:"لأن الحكم على الجسم متحرك/ساكن يعتمد على المرجع؛ قد يكون ساكنًا بالنسبة لراكب السيارة ومتحركًا بالنسبة للطريق.",
+      },
+      {
+        id:"3",
+        lesson:"2-1",
+        group:"chapter",
+        text:"ما فائدة الصور المتتابعة (التصوير المتتابع) في دراسة الحركة؟",
+        hint:"الفكرة: لقطات بزمن متساوٍ.",
+        solution:"تعطي مواقع الجسم عند أزمنة متساوية، ومن تباعد اللقطات نستنتج السرعة: تباعد أكبر يعني حركة أسرع.",
+      },
+      {
+        id:"4",
+        lesson:"2-1",
+        group:"chapter",
+        text:"ما المقصود بالمخطط التوضيحي للحركة؟",
+        hint:"هو تمثيل مبسّط لمواضع الجسم.",
+        solution:"هو رسم يوضح مواضع الجسم في أزمنة متساوية (نقاط/أسهم) ليسهل وصف اتجاه الحركة وتغير سرعتها.",
+      },
+      {
+        id:"5",
+        lesson:"2-1",
+        group:"chapter",
+        text:"ما نموذج الجسيم النقطي ولماذا يُستخدم؟",
+        hint:"نتجاهل حجم الجسم ونركز على مركزه.",
+        solution:"تمثيل الجسم كنقطة (عادة مركز الكتلة) لتبسيط تحليل الحركة؛ نهتم بالموقع والزمن بدل التفاصيل الشكلية.",
+      },
+      {
+        id:"6",
+        lesson:"2-1",
+        group:"chapter",
+        text:"إذا تقاربت النقاط في نموذج الجسيم النقطي فماذا يعني ذلك؟",
+        hint:"المسافة المقطوعة في نفس الزمن.",
+        solution:"يعني أن الجسم يقطع مسافة صغيرة في كل فترة زمنية متساوية ⇒ سرعته صغيرة.",
+      },
+      {
+        id:"7",
+        lesson:"2-1",
+        group:"chapter",
+        text:"إذا تباعدت النقاط في نموذج الجسيم النقطي فماذا يعني ذلك؟",
+        hint:"قارن المسافات بين النقاط.",
+        solution:"يعني أن الجسم يقطع مسافة كبيرة في كل فترة زمنية متساوية ⇒ سرعته كبيرة.",
+      },
+      {
+        id:"8",
+        lesson:"2-1",
+        group:"chapter",
+        text:"كيف تميّزين الحركة المنتظمة من نموذج الجسيم النقطي؟",
+        hint:"هل المسافات بين النقاط متساوية؟",
+        solution:"إذا كانت المسافات بين النقاط متساوية خلال أزمنة متساوية ⇒ سرعة ثابتة ⇒ حركة منتظمة.",
+      },
+      {
+        id:"9",
+        lesson:"2-1",
+        group:"chapter",
+        text:"كيف تميّزين الحركة غير المنتظمة من نموذج الجسيم النقطي؟",
+        hint:"تغيّر المسافات بين النقاط.",
+        solution:"إذا تغيرت المسافات بين النقاط (تزداد/تقل) ⇒ السرعة تتغير ⇒ حركة غير منتظمة.",
+      },
+      {
+        id:"10",
+        lesson:"2-1",
+        group:"chapter",
+        text:"صف نموذج جسيم نقطي لسيارة تتسارع للأمام.",
+        hint:"ابدئي بنقاط متقاربة ثم أبعديها تدريجيًا.",
+        solution:"تكون النقاط في البداية متقاربة ثم تزداد المسافة بينها مع الزمن في اتجاه الحركة؛ لأن السرعة تزداد.",
+      },
+      {
+        id:"11",
+        lesson:"2-1",
+        group:"chapter",
+        text:"صف نموذج جسيم نقطي لسيارة تتباطأ.",
+        hint:"ابدئي بنقاط متباعدة ثم قرّبيها.",
+        solution:"تكون النقاط في البداية متباعدة ثم تتقارب تدريجيًا مع الزمن في اتجاه الحركة؛ لأن السرعة تقل.",
+      },
+      {
+        id:"12",
+        lesson:"2-1",
+        group:"chapter",
+        text:"هل يمكن لجسمين أن يكون لهما نفس الحركة؟ متى؟",
+        hint:"نفس الاتجاه ونفس التغير في الموقع.",
+        solution:"نعم إذا تحركا بحيث تكون مواضعهما تتغير بالطريقة نفسها مع الزمن (نفس السرعة والاتجاه بالنسبة لنفس المرجع).",
+      },
+      {
+        id:"13",
+        lesson:"2-1",
+        group:"chapter",
+        text:"اذكري مثالًا يوضح نسبية الحركة.",
+        hint:"مثال: راكب في سيارة.",
+        solution:"الراكب ساكن بالنسبة للسيارة لكنه متحرك بالنسبة للطريق؛ لأن المرجع مختلف.",
+      },
+      {
+        id:"14",
+        lesson:"2-1",
+        group:"chapter",
+        text:"لماذا يُعد تمثيل الحركة خطوة قبل دراسة السرعة والتسارع؟",
+        hint:"السرعة والتسارع مشتقة من تغيّر الموقع.",
+        solution:"لأن السرعة والتسارع يعتمدين على كيفية تغيّر موقع الجسم مع الزمن، فلا بد من تمثيل الحركة أولًا.",
+      },
+      {
+        id:"15",
+        lesson:"2-2",
+        group:"chapter",
+        text:"ما المقصود بنقطة الأصل في النظام الإحداثي؟",
+        hint:"هي الصفر الذي نقيس منه.",
+        solution:"هي النقطة التي يكون عندها الموقع = 0 وتُقاس المواقع بالنسبة لها موجبًا أو سالبًا.",
+      },
+      {
+        id:"16",
+        lesson:"2-2",
+        group:"chapter",
+        text:"ما معنى أن الموقع سالب؟",
+        hint:"يعتمد على اتجاه الموجب المختار.",
+        solution:"يعني أن الجسم يقع في الجهة المقابلة للاتجاه الموجب بالنسبة لنقطة الأصل.",
+      },
+      {
+        id:"17",
+        lesson:"2-2",
+        group:"chapter",
+        text:"عرّف الإزاحة.",
+        hint:"من البداية للنهاية مع اتجاه.",
+        solution:"الإزاحة هي التغير في الموقع: Δx = x_f − x_i وهي كمية متجهة لها مقدار واتجاه.",
+      },
+      {
+        id:"18",
+        lesson:"2-2",
+        group:"chapter",
+        text:"ما الفرق بين المسافة والإزاحة؟",
+        hint:"المسافة مسار، الإزاحة فرق موقع.",
+        solution:"المسافة طول المسار المقطوع (قياسية)، أما الإزاحة فهي أقصر تغير من البداية للنهاية مع اتجاه (متجهة).",
+      },
+      {
+        id:"19",
+        lesson:"2-2",
+        group:"chapter",
+        text:"هل يمكن أن تكون الإزاحة صفرًا والمسافة غير صفر؟ وضّح.",
+        hint:"حالة ذهاب وعودة.",
+        solution:"نعم عند العودة لنقطة البداية؛ الإزاحة = 0 لأن x_f = x_i بينما المسافة > 0 لأنها مجموع المسار.",
+      },
+      {
+        id:"20",
+        lesson:"2-2",
+        group:"chapter",
+        text:"إذا تحركتِ 5 km شرقًا ثم 3 km غربًا، ما الإزاحة؟",
+        hint:"اعتبري الشرق موجبًا.",
+        solution:"Δx = +5 − 3 = +2 km (أي 2 km شرقًا).",
+      },
+      {
+        id:"21",
+        lesson:"2-2",
+        group:"chapter",
+        text:"ما المقصود بالفترة الزمنية؟ وكيف تُحسب؟",
+        hint:"فرق بين زمنين.",
+        solution:"الفترة الزمنية Δt = t_f − t_i وتمثل مدة الحركة.",
+      },
+      {
+        id:"22",
+        lesson:"2-2",
+        group:"chapter",
+        text:"صنّفي: الزمن، المسافة، الإزاحة (قياسية/متجهة).",
+        hint:"وجود اتجاه؟",
+        solution:"الزمن والمسافة كميات قياسية، والإزاحة كمية متجهة.",
+      },
+      {
+        id:"23",
+        lesson:"2-2",
+        group:"chapter",
+        text:"لماذا تعد الإزاحة كمية متجهة؟",
+        hint:"لأنها تحتاج اتجاه.",
+        solution:"لأن قيمتها تعتمد على الاتجاه (الموجب/السالب) إضافة إلى المقدار.",
+      },
+      {
+        id:"24",
+        lesson:"2-2",
+        group:"chapter",
+        text:"متى تكون الإزاحة موجبة ومتى تكون سالبة؟",
+        hint:"بالنسبة لاتجاه الموجب.",
+        solution:"تكون موجبة إذا كان x_f أكبر من x_i (اتجاه موجب)، وسالبة إذا كان x_f أقل من x_i (اتجاه سالب).",
+      },
+      {
+        id:"25",
+        lesson:"2-2",
+        group:"chapter",
+        text:"جسم تحرك من x= -2 m إلى x= +6 m. احسبي الإزاحة.",
+        hint:"Δx = x_f − x_i.",
+        solution:"Δx = 6 − (−2) = 8 m باتجاه الموجب.",
+      },
+      {
+        id:"26",
+        lesson:"2-2",
+        group:"chapter",
+        text:"جسم تحرك من x= 10 m إلى x= 4 m. احسبي الإزاحة.",
+        hint:"قد تكون سالبة.",
+        solution:"Δx = 4 − 10 = −6 m (6 m باتجاه السالب).",
+      },
+      {
+        id:"27",
+        lesson:"2-2",
+        group:"chapter",
+        text:"هل تتغير الإزاحة بتغير المسار؟",
+        hint:"البداية والنهاية فقط.",
+        solution:"لا؛ الإزاحة تعتمد فقط على موضعي البداية والنهاية، بينما المسافة تتغير بتغير المسار.",
+      },
+      {
+        id:"28",
+        lesson:"2-2",
+        group:"chapter",
+        text:"إذا تحرك جسم 2 m شرقًا ثم 2 m غربًا، احسبي المسافة والإزاحة.",
+        hint:"اجمع للمسافة واطرح للإزاحة.",
+        solution:"المسافة = 2+2=4 m، الإزاحة = 0 m لأنه عاد لنقطة البداية.",
+      },
+      {
+        id:"29",
+        lesson:"2-3",
+        group:"chapter",
+        text:"ما الذي يمثله منحنى (الموقع–الزمن)؟",
+        hint:"الموقع مقابل الزمن.",
+        solution:"يمثل تغير موقع الجسم مع الزمن؛ المحور الأفقي للزمن والعمودي للموقع.",
+      },
+      {
+        id:"30",
+        lesson:"2-3",
+        group:"chapter",
+        text:"ماذا يمثل ميل منحنى الموقع–الزمن؟",
+        hint:"Δx/Δt.",
+        solution:"يمثل السرعة المتجهة المتوسطة (وعند نقطة يمثل السرعة اللحظية إذا أخذنا مماسًا).",
+      },
+      {
+        id:"31",
+        lesson:"2-3",
+        group:"chapter",
+        text:"ماذا يدل الخط المستقيم المائل في منحنى الموقع–الزمن؟",
+        hint:"ميل ثابت.",
+        solution:"يدل على حركة بسرعة ثابتة (سرعة متجهة ثابتة) لأن الميل ثابت.",
+      },
+      {
+        id:"32",
+        lesson:"2-3",
+        group:"chapter",
+        text:"ماذا يدل الخط الأفقي في منحنى الموقع–الزمن؟",
+        hint:"الموقع ثابت.",
+        solution:"يدل على السكون؛ الموقع لا يتغير بمرور الزمن ⇒ السرعة = 0.",
+      },
+      {
+        id:"33",
+        lesson:"2-3",
+        group:"chapter",
+        text:"إذا كان ميل المنحنى سالبًا، ماذا يعني؟",
+        hint:"اتجاه الحركة.",
+        solution:"يعني أن الجسم يتحرك في الاتجاه السالب (الموقع يقل مع الزمن).",
+      },
+      {
+        id:"34",
+        lesson:"2-3",
+        group:"chapter",
+        text:"منحنى موقع–زمن ميله يزداد مع الزمن: ماذا يحدث للسرعة؟",
+        hint:"الميل = السرعة.",
+        solution:"السرعة تزداد مع الزمن (الجسم يتسارع في الاتجاه الموجب).",
+      },
+      {
+        id:"35",
+        lesson:"2-3",
+        group:"chapter",
+        text:"منحنى موقع–زمن ميله يقل مع الزمن: ماذا يحدث للسرعة؟",
+        hint:"الميل يتناقص.",
+        solution:"السرعة تقل مع الزمن (تتباطأ الحركة في اتجاه الموجب، أو تتسارع سالبًا حسب الإشارة).",
+      },
+      {
+        id:"36",
+        lesson:"2-3",
+        group:"chapter",
+        text:"كيف تحسبين السرعة المتوسطة من منحنى الموقع–الزمن بين نقطتين؟",
+        hint:"احسبي الميل بين النقطتين.",
+        solution:"v_avg = (x2−x1)/(t2−t1) وهو ميل الخط الواصل بين النقطتين.",
+      },
+      {
+        id:"37",
+        lesson:"2-3",
+        group:"chapter",
+        text:"أي جسم أسرع: منحناه أكثر ميلًا أم أقل ميلًا؟",
+        hint:"قارنة الميل.",
+        solution:"الأكثر ميلًا (قدرًا مطلقًا) أسرع لأن |Δx/Δt| أكبر.",
+      },
+      {
+        id:"38",
+        lesson:"2-3",
+        group:"chapter",
+        text:"متى تكون الحركة غير منتظمة على منحنى الموقع–الزمن؟",
+        hint:"هل الخط منحني؟",
+        solution:"عندما يكون المنحنى غير خطي (الميل يتغير مع الزمن) ⇒ السرعة تتغير.",
+      },
+      {
+        id:"39",
+        lesson:"2-3",
+        group:"chapter",
+        text:"صف منحنى موقع–زمن لجسم يتحرك بسرعة ثابتة في الاتجاه السالب.",
+        hint:"خط مستقيم وميل سالب.",
+        solution:"يكون خطًا مستقيمًا مائلًا لأسفل مع الزمن (ميل ثابت وسالب).",
+      },
+      {
+        id:"40",
+        lesson:"2-3",
+        group:"chapter",
+        text:"صف منحنى موقع–زمن لجسم يبدأ ساكنًا ثم يتحرك بسرعة ثابتة.",
+        hint:"جزء أفقي ثم مائل.",
+        solution:"في البداية خط أفقي (سكون) ثم خط مستقيم مائل (حركة بسرعة ثابتة).",
+      },
+      {
+        id:"41",
+        lesson:"2-3",
+        group:"chapter",
+        text:"لماذا نستخدم الرسوم البيانية في وصف الحركة؟",
+        hint:"تلخص معلومات كثيرة.",
+        solution:"لأنها تُظهر العلاقة بين الكميات بوضوح وتساعد على استنتاج السرعة والاتجاه وتغير الحركة.",
+      },
+      {
+        id:"42",
+        lesson:"2-3",
+        group:"chapter",
+        text:"كيف تتنبئين بما سيحدث لاحقًا من منحنى الموقع–الزمن؟",
+        hint:"مدّي الاتجاه/الميل.",
+        solution:"بمتابعة اتجاه الميل وتغيره: ميل ثابت ⇒ تستمر السرعة نفسها، وميل متزايد/متناقص ⇒ تسارع/تباطؤ.",
+      },
+      {
+        id:"43",
+        lesson:"2-4",
+        group:"chapter",
+        text:"ما المقصود بالسرعة المتجهة؟",
+        hint:"معدل تغير الإزاحة واتجاهها.",
+        solution:"السرعة المتجهة هي معدل تغير الإزاحة مع الزمن: v = Δx/Δt وهي كمية متجهة.",
+      },
+      {
+        id:"44",
+        lesson:"2-4",
+        group:"chapter",
+        text:"ما الفرق بين السرعة (القياسية) والسرعة المتجهة؟",
+        hint:"الاتجاه هو الفارق.",
+        solution:"السرعة القياسية مقدار فقط، أما السرعة المتجهة فلها مقدار واتجاه (موجب/سالب وفق المحور).",
+      },
+      {
+        id:"45",
+        lesson:"2-4",
+        group:"chapter",
+        text:"سيارة قطعت إزاحة 120 m خلال 10 s. احسبي السرعة المتجهة المتوسطة.",
+        hint:"v = Δx/Δt.",
+        solution:"v = 120/10 = 12 m/s (باتجاه الإزاحة).",
+      },
+      {
+        id:"46",
+        lesson:"2-4",
+        group:"chapter",
+        text:"متى تكون السرعة المتجهة سالبة؟",
+        hint:"عندما يقل الموقع.",
+        solution:"عندما تكون الإزاحة سالبة بالنسبة للاتجاه الموجب المختار (الحركة باتجاه السالب).",
+      },
+      {
+        id:"47",
+        lesson:"2-4",
+        group:"chapter",
+        text:"إذا كانت السرعة المتجهة = 0، هل يعني الجسم ساكن دائمًا؟",
+        hint:"قد يعود لنقطة البداية.",
+        solution:"ليس دائمًا: قد يتحرك ثم يعود لنقطة البداية خلال الفترة فتكون الإزاحة صفرًا وبالتالي السرعة المتوسطة صفرًا.",
+      },
+      {
+        id:"48",
+        lesson:"2-4",
+        group:"chapter",
+        text:"جسم تحرك 30 m شرقًا ثم 30 m غربًا خلال 20 s. احسبي السرعة المتوسطة والسرعة المتجهة المتوسطة.",
+        hint:"المسافة vs الإزاحة.",
+        solution:"المسافة=60 m ⇒ السرعة المتوسطة=60/20=3 m/s. الإزاحة=0 ⇒ السرعة المتجهة المتوسطة=0 m/s.",
+      },
+      {
+        id:"49",
+        lesson:"ch2_eval",
+        group:"chapter",
+        text:"قارني بين المسافة والإزاحة من حيث (النوع/الاعتماد على الاتجاه).",
+        hint:"واحدة قياسية والأخرى متجهة.",
+        solution:"المسافة كمية قياسية تعتمد على طول المسار فقط، والإزاحة كمية متجهة تعتمد على البداية والنهاية والاتجاه.",
+      },
+      {
+        id:"50",
+        lesson:"ch2_eval",
+        group:"chapter",
+        text:"قارني بين الحركة المنتظمة وغير المنتظمة.",
+        hint:"هل السرعة ثابتة؟",
+        solution:"المنتظمة سرعتها ثابتة (ميل ثابت)، وغير المنتظمة سرعتها تتغير (ميل يتغير).",
+      },
+      {
+        id:"51",
+        lesson:"ch2_eval",
+        group:"chapter",
+        text:"ما العلاقة بين ميل منحنى الموقع–الزمن والسرعة المتجهة؟",
+        hint:"Δx/Δt.",
+        solution:"ميل منحنى الموقع–الزمن يساوي السرعة المتجهة؛ ميل أكبر يعني سرعة أكبر واتجاهه يعطي الإشارة.",
+      },
+      {
+        id:"52",
+        lesson:"ch2_eval",
+        group:"chapter",
+        text:"كيف تعرفين من منحنى الموقع–الزمن أن الجسم ساكن؟",
+        hint:"خط أفقي.",
+        solution:"عندما يكون المنحنى أفقيًا لأن الموقع ثابت ولا يتغير مع الزمن.",
+      },
+      {
+        id:"53",
+        lesson:"ch2_eval",
+        group:"chapter",
+        text:"جسم تحرك من 0 m إلى 8 m خلال 4 s ثم عاد إلى 2 m خلال 3 s. احسبي الإزاحة الكلية والسرعة المتجهة المتوسطة للفترة كلها.",
+        hint:"احسبي x_f − x_i والزمن الكلي.",
+        solution:"الإزاحة الكلية = 2−0=2 m. الزمن الكلي = 7 s ⇒ v_avg = 2/7 ≈ 0.29 m/s باتجاه الموجب.",
+      },
+      {
+        id:"54",
+        lesson:"ch2_eval",
+        group:"chapter",
+        text:"جسم تحرك 6 m غربًا ثم 10 m شرقًا. احسبي المسافة والإزاحة (اعتبري الشرق موجبًا).",
+        hint:"اجمع للمسافة واطرح للإزاحة.",
+        solution:"المسافة=6+10=16 m، الإزاحة=+10−6=+4 m (4 m شرقًا).",
+      },
+      {
+        id:"55",
+        lesson:"ch2_eval",
+        group:"chapter",
+        text:"لماذا لا يمكن أن تكون قيمة الإزاحة أكبر من المسافة؟",
+        hint:"الإزاحة أقصر طريق.",
+        solution:"لأن الإزاحة تمثل أقصر مسافة مستقيمة بين البداية والنهاية، بينما المسافة هي طول المسار وقد يكون أطول أو يساويها.",
+      },
+      {
+        id:"56",
+        lesson:"ch2_eval",
+        group:"chapter",
+        text:"اشرح كيف تساعد نقطة المرجع واتجاه الموجب في تحديد إشارات (الموقع/الإزاحة/السرعة المتجهة).",
+        hint:"الإشارة مرتبطة بالاتجاه المختار.",
+        solution:"عند اختيار اتجاه موجب، تكون المواقع/الإزاحات/السرعات باتجاهه موجبة، وبالاتجاه المعاكس سالبة؛ لذلك يتغير وصف الحركة بتغير المرجع.",
+      },
+      {
+        id:"1",
+        lesson:"ch2_exam",
+        group:"scaled",
+        text:"يمثل ميل منحنى الموقع–الزمن:",
+        hint:"تذكري Δx/Δt.",
+        solution:"السرعة المتجهة.",
+      },
+      {
+        id:"2",
+        lesson:"ch2_exam",
+        group:"scaled",
+        text:"إذا كان منحنى الموقع–الزمن أفقيًا فإن الجسم:",
+        hint:"الموقع لا يتغير.",
+        solution:"ساكن (سرعته = 0).",
+      },
+      {
+        id:"3",
+        lesson:"ch2_exam",
+        group:"scaled",
+        text:"أي الكميات التالية متجهة؟ (المسافة، الزمن، الإزاحة، الكتلة)",
+        hint:"وجود اتجاه؟",
+        solution:"الإزاحة.",
+      },
+      {
+        id:"4",
+        lesson:"ch2_exam",
+        group:"scaled",
+        text:"جسم عاد لنقطة البداية بعد حركة. أي عبارة صحيحة؟",
+        hint:"فكري في الإزاحة.",
+        solution:"الإزاحة تساوي صفرًا.",
+      },
+      {
+        id:"5",
+        lesson:"ch2_exam",
+        group:"scaled",
+        text:"تباعد النقاط في نموذج الجسيم النقطي مع أزمنة متساوية يدل على:",
+        hint:"مسافة أكبر في نفس الزمن.",
+        solution:"سرعة أكبر.",
+      },
+      {
+        id:"6",
+        lesson:"ch2_exam",
+        group:"scaled",
+        text:"سرعة متجهة سالبة تعني أن الجسم يتحرك:",
+        hint:"بالنسبة للاتجاه الموجب المختار.",
+        solution:"في الاتجاه السالب.",
+      }
+    ]
+  };
+
+  let selectedQuestion = null;
+
+  function getQuestionById(id){
+    if(!id || !currentChapter) return null;
+    const bank = questionBank[currentChapter.id] || [];
+    return bank.find(x => x.id === id) || null;
+  }
+
+  function shortLabel(s, n=40){
+    const t = (s || "").trim();
+    return t.length <= n ? t : (t.slice(0,n-1) + "…");
+  }
+
+  function refreshQuestionSelect(){
+    if(!questionSelect) return;
+
+    // إعادة تهيئة القائمة
+    questionSelect.innerHTML = "";
+
+    // عنصر إرشادي فقط (بدون خيار "اكتبي سؤالك بنفسك" داخل الأسئلة الجاهزة)
+    const ph = document.createElement("option");
+    ph.value = "";
+    ph.textContent = "— اختاري سؤالًا —";
+    ph.disabled = true;
+    ph.selected = true;
+    questionSelect.appendChild(ph);
+
+    const bank = currentChapter ? (questionBank[currentChapter.id] || []) : [];
+    if(!bank.length) return;
+
+    const sel = lessonSelect ? lessonSelect.value : "";
+
+    // فلترة الأسئلة بحسب اختيار الدرس/التقويم/الاختبار المقنن (بشكل عام لكل الفصول)
+    let filtered = [];
+    let label = "الأسئلة";
+
+    if(sel.endsWith("_exam")){
+      filtered = bank.filter(q => q.group === "scaled" && q.lesson === sel);
+      label = "الاختبار المقنن";
+    }else if(sel.endsWith("_eval")){
+      filtered = bank.filter(q => q.group === "chapter" && q.lesson === sel);
+      label = "تقويم الفصل";
+    }else{
+      filtered = bank.filter(q => q.group === "chapter" && q.lesson === sel);
+      label = `أسئلة ${getLessonName()}`;
+    }
+
+    if(!filtered.length) return;
+
+    const og = document.createElement("optgroup");
+    og.label = label;
+
+    filtered.forEach(q => {
+      const opt = document.createElement("option");
+      opt.value = q.id;
+      if(q.group === "scaled"){
+        // عرض رقم سؤال الاختبار بشكل واضح
+        const n = String(q.id).replace(/^MC2?-?/,"").replace(/^MC-/,"");
+        opt.textContent = `اختبار ${n} — ${shortLabel(q.text)}`;
+      }else{
+        opt.textContent = `س${q.id} — ${shortLabel(q.text)}`;
+      }
+      og.appendChild(opt);
+    });
+
+    questionSelect.appendChild(og);
+
+    // اختيار أول سؤال تلقائيًا لكي لا يرجع للوضع اليدوي
+    questionSelect.value = filtered[0].id;
+    selectedQuestion = getQuestionById(questionSelect.value);
+    if(selectedQuestion){
+      problemInput.value = selectedQuestion.text;
+      aiOut.textContent = "✅ تم اختيار سؤال جاهز. اضغطي «أعطني تلميح» أو «حلل و اشرح».";
+    }
+  }
+
+
+
+  function renderChapters(){
+    chaptersGrid.innerHTML = "";
+    chapters.forEach(ch => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <div class="card-image" style="background-image:url('${ch.image}')"></div>
+        <div class="card-content">
+          <div>
+            <div class="badge">📘 <span>${ch.id.toUpperCase()}</span></div>
+            <h3>${ch.title}</h3>
+            <p>${ch.focus}</p>
+          </div>
+          <div>
+            <div class="sub">
+              <div class="mini">✏️ مسائل</div>
+              <div class="mini">🧪 معمل</div>
+              <div class="mini">🌟 إثراءات</div>
+            </div>
+            <p class="note">اضغطي للدخول →</p>
+          </div>
+        </div>
+      `;
+      card.addEventListener("click", () => openChapter(ch.id));
+      chaptersGrid.appendChild(card);
+    });
+  }
+
+  function show(view){
+    homeView.classList.add("hidden");
+    chapterView.classList.add("hidden");
+    aboutView.classList.add("hidden");
+    view.classList.remove("hidden");
+  }
+
+  function openChapter(chId){
+    currentChapter = chapters.find(c => c.id === chId);
+    if(!currentChapter) return;
+    crumb.textContent = `أنتِ الآن في: ${currentChapter.title}`;
+    lessonSelect.innerHTML = "";
+    currentChapter.lessons.forEach(ls => {
+      const opt = document.createElement("option");
+      opt.value = ls.id;
+      opt.textContent = ls.name;
+      lessonSelect.appendChild(opt);
+    });
+    aiOut.textContent = "سيظهر شرح النتائج هنا.";
+    problemInput.value = "";
+    selectedQuestion = null;
+    if(questionSelect) questionSelect.value = "";
+    refreshQuestionSelect();
+    setTab("problems");
+    updateLabForChapter();
+    resetCh1LabView();
+    show(chapterView);
+  }
+
+  function goHome(){
+    currentChapter = null;
+    show(homeView);
+  }
+
+  goHomeBtn.addEventListener("click", goHome);
+  aboutBtn.addEventListener("click", () => show(aboutView));
+  backFromAbout.addEventListener("click", () => show(homeView));
+
+  function setTab(name){
+    tabs.forEach(t => t.classList.toggle("active", t.dataset.tab === name));
+
+    problemsPanel.classList.toggle("hidden", name !== "problems");
+    labPanel.classList.toggle("hidden", name !== "lab");
+    enrichPanel.classList.toggle("hidden", name !== "enrich");
+
+    // إظهار خانة النتيجة والشرح فقط في تبويب حل المسائل
+    // (وتختفي في الإثراءات والمعمل)
+    if(resultPanel){
+      resultPanel.classList.toggle("hidden", name !== "problems");
+    }
+
+    if(name === "lab"){
+      updateLabForChapter();
+      if(currentChapter && currentChapter.id === "ch1"){
+        resetCh1LabView();
+      }else{
+        runLab();
+      }
+    }
+
+    if(name === "enrich"){
+      genEnrichment();
+    }
+  }
+
+  tabs.forEach(t => t.addEventListener("click", () => setTab(t.dataset.tab)));
+
+  function getLessonName(){
+    const v = lessonSelect.value;
+    const found = currentChapter?.lessons.find(x => x.id === v);
+    return found ? found.name : "الدرس";
+  }
+
+  function offlineSolve(problemText, mode="solve"){
+    const lesson = getLessonName();
+    const chTitle = currentChapter?.title ?? "الفصل";
+    const cleaned = (problemText || "").trim();
+    if(!cleaned) return `(${chTitle} • ${lesson})\n\nاكتبي نص المسألة أولًا ✍️`;
+    const hasForce = /قوة|نيوتن|F\b/i.test(cleaned);
+    const hasMass = /كتلة|كجم|kg/i.test(cleaned);
+    const hasAcc = /تسارع|عجلة|m\/s\^2|م\/ث\^2|a\b/i.test(cleaned);
+    const hasVel = /سرعة|m\/s|م\/ث|v\b/i.test(cleaned);
+    const hasTime = /زمن|ثانية|s\b|t\b/i.test(cleaned);
+    const hasDist = /مسافة|إزاحة|متر|m\b|s\b/i.test(cleaned);
+    const hasFree = /سقوط|g\b|9\.8/i.test(cleaned);
+    if(mode==="hint") return `(${chTitle} • ${lesson})\n\nتلميح ✅\n- اكتبي المعطيات\n- حددي المطلوب\n- اختاري قانون مناسب`;
+    let steps = [];
+    steps.push(`(${chTitle} • ${lesson})`);
+    steps.push(`1) فهم المطلوب: حددي ما الذي نبحث عنه.`);
+    steps.push(`2) استخراج المعطيات: اكتبي القيم مع الوحدات.`);
+    steps.push(`3) اختيار القانون المناسب:`);
+    if(hasForce && hasMass) steps.push(`   - قانون نيوتن الثاني: F = m a`);
+    steps.push(`4) التعويض بالأرقام ثم التأكد من الوحدات.`);
+    steps.push(`5) كتابة النتيجة بشكل واضح.`);
+    return steps.join("\n");
+  }
+
+
+  if(questionSelect){
+    questionSelect.addEventListener("change", () => {
+      const q = getQuestionById(questionSelect.value);
+      selectedQuestion = q;
+      if(q){
+        // نعرض نص السؤال في مربع الإدخال (يمكن للطالبة تعديله)
+        problemInput.value = q.text;
+        aiOut.textContent = "✅ تم اختيار سؤال جاهز. اضغطي «أعطني تلميح» أو «حلل و اشرح».";
+      }else{
+        aiOut.textContent = "سيظهر شرح النتائج هنا.";
+      }
+    });
+  }
+
+  // إذا عدّلتِ النص يدويًا، اعتبريه سؤالًا حرًّا
+  problemInput.addEventListener("input", () => {
+    if(questionSelect && selectedQuestion && problemInput.value.trim() !== selectedQuestion.text.trim()){
+      questionSelect.value = "";
+      selectedQuestion = null;
+    }
+  });
+
+  solveBtn.addEventListener("click", () => {
+    if(selectedQuestion){
+      aiOut.textContent = `🧩 ${selectedQuestion.text}\n\n💡 تلميح:\n${selectedQuestion.hint}\n\n✅ الحل مع الشرح:\n${selectedQuestion.solution}`;
+    }else{
+      aiOut.textContent = offlineSolve(problemInput.value, "solve");
+    }
+  });
+
+  hintBtn.addEventListener("click", () => {
+    if(selectedQuestion){
+      aiOut.textContent = `💡 تلميح لسؤال س${selectedQuestion.id}:\n${selectedQuestion.hint}`;
+    }else{
+      aiOut.textContent = offlineSolve(problemInput.value, "hint");
+    }
+  });
+
+  function syncRangeAndNumber(rangeEl, numEl){
+    rangeEl.addEventListener("input", () => numEl.value = rangeEl.value);
+    numEl.addEventListener("input", () => {
+      let v = Number(numEl.value);
+      if(Number.isNaN(v)) v = Number(rangeEl.min);
+      v = Math.max(Number(rangeEl.min), Math.min(Number(rangeEl.max), v));
+      numEl.value = v;
+      rangeEl.value = v;
+    });
+  }
+  syncRangeAndNumber(vRange, vVal);
+  syncRangeAndNumber(tRange, tVal);
+  syncRangeAndNumber(aRange, aVal);
+
+  function runLab(){
+    const v = Number(vVal.value);
+    const t = Number(tVal.value);
+    const a = Number(aVal.value);
+    const s = v*t + 0.5*a*t*t;
+    const vx = v + a*t;
+    sOut.textContent = ` = ${s.toFixed(2)} متر`;
+    vxOut.textContent = ` = ${vx.toFixed(2)} م/ث`;
+    let insight = "";
+    if(a === 0) insight = "الحركة منتظمة.";
+    else if(a > 0) insight = "تسارع موجب.";
+    else insight = "تسارع سالب.";
+    insightOut.textContent = insight;
+    drawPlot(v,a,t);
+    (labOut || aiOut).textContent = `🧪 نتيجة المعمل
+
+المعطيات: v₀ = ${v.toFixed(2)} م/ث ، t = ${t.toFixed(2)} ث ، a = ${a.toFixed(2)} م/ث²
+القوانين: s = v₀ t + ½ a t² ، v = v₀ + a t
+
+النتائج:
+s = ${s.toFixed(2)} م
+v = ${vx.toFixed(2)} م/ث
+
+التفسير: ${insight}`;
+  }
+
+  runLabBtn.addEventListener("click", function(e){ if(e){e.preventDefault();e.stopPropagation();} runLab(); });
+
+  function drawPlot(v,a,tMax){
+    const W = canvas.clientWidth || 300, H = 240;
+    ctx.clearRect(0,0,W,H);
+    const N = 60;
+    let xs = [];
+    let yMax = 0;
+    for(let i=0;i<=N;i++){
+      const tt = tMax * (i/N);
+      const x = v*tt + 0.5*a*tt*tt;
+      xs.push({tt, x});
+      yMax = Math.max(yMax, x);
+    }
+    yMax = Math.max(1, yMax);
+    const padL=70, padR=20, padT=20, padB=55;
+    const plotW = W - padL - padR;
+    const plotH = H - padT - padB;
+    ctx.strokeStyle = "#ddd";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(padL, padT);
+    ctx.lineTo(padL, H-padB);
+    ctx.lineTo(W-padR, H-padB);
+    ctx.stroke();
+    ctx.strokeStyle = "#8b1d2c";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    for(let i=0;i<xs.length;i++){
+      const px = padL + (xs[i].tt / tMax) * plotW;
+      const py = (H-padB) - (xs[i].x / yMax) * plotH;
+      if(i===0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+  }
+
+  function genEnrichment(){
+    const type = enrichType.value;
+    const lesson = getLessonName();
+    let content = "";
+    if(type === "concept") content = `🔬 مفهوم متقدم: ${lesson}`;
+    else if(type === "history") content = `📖 تاريخ الفيزياء: ${lesson}`;
+    else if(type === "realworld") content = `🌍 تطبيقات حقيقية: ${lesson}`;
+    else if(type === "challenge") content = `🎯 تحدي إضافي: ${lesson}`;
+    enrichOut.textContent = content;
+  }
+
+  genEnrichBtn.addEventListener("click", genEnrichment);
+  renderChapters();
+
+// ====== الفصل الثاني: الاختبار المقنن (1–6) ======
+questionBank.ch2.push(
+  {
+    id:"MC2-1",
+    lesson:"ch2_exam",
+    group:"scaled",
+    text:"يمثل ميل منحنى الموقع–الزمن أي كمية فيزيائية؟",
+    hint:"فكري في Δالموقع ÷ Δالزمن.",
+    solution:"يمثل السرعة المتجهة."
+  },
+  {
+    id:"MC2-2",
+    lesson:"ch2_exam",
+    group:"scaled",
+    text:"إذا تحرك جسم ثم عاد إلى نقطة البداية فإن قيمة الإزاحة تكون:",
+    hint:"الإزاحة تعتمد على البداية والنهاية فقط.",
+    solution:"تساوي صفرًا."
+  },
+  {
+    id:"MC2-3",
+    lesson:"ch2_exam",
+    group:"scaled",
+    text:"أي من الكميات الآتية كمية متجهة؟",
+    hint:"الكمية المتجهة لها مقدار واتجاه.",
+    solution:"الإزاحة."
+  },
+  {
+    id:"MC2-4",
+    lesson:"ch2_exam",
+    group:"scaled",
+    text:"إذا كان منحنى الموقع–الزمن خطًا أفقيًا فهذا يدل على أن الجسم:",
+    hint:"الموقع لا يتغير.",
+    solution:"ساكن."
+  },
+  {
+    id:"MC2-5",
+    lesson:"ch2_exam",
+    group:"scaled",
+    text:"متى تكون السرعة المتجهة سالبة؟",
+    hint:"انتبهي لاتجاه الحركة.",
+    solution:"عندما تكون الحركة في الاتجاه السالب بالنسبة للاتجاه الموجب المختار."
+  },
+  {
+    id:"MC2-6",
+    lesson:"ch2_exam",
+    group:"scaled",
+    text:"في نموذج الجسيم النقطي، ماذا يدل تزايد المسافة بين النقاط المتتالية؟",
+    hint:"تغير السرعة مع الزمن.",
+    solution:"تزايد سرعة الجسم."
+  }
+);
+
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const ch2LabContent = document.getElementById('ch2LabContent');
+  const labSelectCh2 = document.getElementById('labSelectCh2');
+  const carsLabCard = document.getElementById('carsLabCard');
+  const instvLabCard = document.getElementById('instvLabCard');
+  const runCarsBtn = document.getElementById('runCarsBtn');
+  const carsResultOut = document.getElementById('carsResultOut');
+  const runInstVBtn = document.getElementById('runInstVBtn');
+  const instvResultOut = document.getElementById('instvResultOut');
+
+  function resetCh2(){
+    if(labSelectCh2) labSelectCh2.value = '';
+    if(carsLabCard) carsLabCard.classList.add('hidden');
+    if(instvLabCard) instvLabCard.classList.add('hidden');
+    if(carsResultOut) carsResultOut.textContent = 'سيظهر الناتج هنا بعد تنفيذ التجربة.';
+    if(instvResultOut) instvResultOut.textContent = 'سيظهر الناتج هنا بعد تنفيذ التجربة.';
+  }
+
+  // show/hide lab cards (Chapter 2)
+  if(labSelectCh2){
+    labSelectCh2.addEventListener('change', function(){
+      if(carsLabCard){ carsLabCard.classList.add('hidden'); carsLabCard.style.display="none"; }
+      if(instvLabCard){ instvLabCard.classList.add('hidden'); instvLabCard.style.display="none"; }
+      if(this.value === 'cars' && carsLabCard){ carsLabCard.classList.remove('hidden'); carsLabCard.style.display=""; }
+      if(this.value === 'instv' && instvLabCard){ instvLabCard.classList.remove('hidden'); instvLabCard.style.display=""; }
+    });
+  }
+
+
+  // "run" demo outputs (book example)
+  if(runCarsBtn && carsResultOut){
+    runCarsBtn.addEventListener('click', function(e){
+      if(e){ e.preventDefault(); e.stopPropagation(); }
+      const redDistCm = parseFloat(document.getElementById('redDistCm')?.value || '82');
+      const blueDistCm = parseFloat(document.getElementById('blueDistCm')?.value || '76');
+      const bothTimeS  = parseFloat(document.getElementById('bothTimeS')?.value || '1');
+
+      const redTime1m  = parseFloat(document.getElementById('redTime1m')?.value || '1.14');
+      const blueTime1m = parseFloat(document.getElementById('blueTime1m')?.value || '1.33');
+
+      const redV_cm_s  = (bothTimeS>0)? (redDistCm/bothTimeS) : NaN;
+      const blueV_cm_s = (bothTimeS>0)? (blueDistCm/bothTimeS) : NaN;
+
+      // compare using both criteria if available
+      let faster = "";
+      if(isFinite(redV_cm_s) && isFinite(blueV_cm_s)){
+        faster = redV_cm_s > blueV_cm_s ? "الحمراء" : (blueV_cm_s > redV_cm_s ? "الزرقاء" : "متساويتان");
+      }
+      // secondary check (time for 1m): smaller time is faster
+      let faster1m = "";
+      if(isFinite(redTime1m) && isFinite(blueTime1m) && redTime1m>0 && blueTime1m>0){
+        faster1m = redTime1m < blueTime1m ? "الحمراء" : (blueTime1m < redTime1m ? "الزرقاء" : "متساويتان");
+      }
+
+      const explain =
+        "📌 <b>البيانات (من إدخالك):</b><br>" +
+        "• خلال <b>"+bothTimeS.toFixed(2)+" s</b>: الحمراء قطعت <b>"+redDistCm.toFixed(1)+" cm</b>، والزرقاء قطعت <b>"+blueDistCm.toFixed(1)+" cm</b>.<br>" +
+        "• السرعة المتوسطة (تقريبًا): الحمراء <b>"+(isFinite(redV_cm_s)?redV_cm_s.toFixed(1):"—")+"</b> cm/s، والزرقاء <b>"+(isFinite(blueV_cm_s)?blueV_cm_s.toFixed(1):"—")+"</b> cm/s.<br><br>" +
+        "• لقطع 1 m: الحمراء <b>"+redTime1m.toFixed(2)+" s</b>، الزرقاء <b>"+blueTime1m.toFixed(2)+" s</b>.<br>";
+
+      let resultLine = "";
+      if(faster === "متساويتان" && faster1m === "متساويتان"){
+        resultLine = "✅ <b>النتيجة:</b> السيارتان متساويتان تقريبًا حسب القيم المدخلة.";
+      }else if(faster && faster !== "متساويتان"){
+        resultLine = "✅ <b>النتيجة (حسب المسافة في نفس الزمن):</b> السيارة <b>"+faster+"</b> أسرع.";
+      }else{
+        resultLine = "✅ <b>النتيجة:</b> أدخلي قيم زمن صحيحة للمقارنة.";
+      }
+
+      if(faster1m && faster1m !== "متساويتان"){
+        resultLine += "<br>✅ <b>تأكيد (حسب الزمن لقطع 1m):</b> السيارة <b>"+faster1m+"</b> أسرع (زمن أقل).";
+      }
+
+      carsResultOut.innerHTML = explain + "<br>" + resultLine;
+      const aiOutBox = document.getElementById("aiOut");
+      if(aiOutBox) aiOutBox.innerHTML = "🚗🚙 <b>نتيجة تجربة أي السيارتين أسرع؟</b><br><br>" + carsResultOut.innerHTML;
+    });
+  }if(runInstVBtn && instvResultOut){
+    runInstVBtn.addEventListener('click', function(e){
+      if(e){ e.preventDefault(); e.stopPropagation(); }
+      const point = document.getElementById('instvPoint')?.value || 'top';
+      const dx = parseFloat(document.getElementById('instvDx')?.value || '0.2');
+      const dt = parseFloat(document.getElementById('instvDt')?.value || '0.5');
+
+      let dir = "—";
+      let v = NaN;
+
+      if(dt > 0){
+        // direction based on selected point
+        if(point === 'top' || point === 'bottom'){
+          v = 0;
+          dir = "لا يوجد (السرعة = 0 عند القمة/القاع)";
+        }else if(point === 'midRight'){
+          v = Math.abs(dx/dt);
+          dir = "يمينًا (موجب)";
+        }else if(point === 'midLeft'){
+          v = -Math.abs(dx/dt);
+          dir = "يسارًا (سالب)";
+        }
+      }
+
+      const pointName = {
+        top:"القمة",
+        bottom:"القاع",
+        midRight:"المنتصف متجهة لليمين",
+        midLeft:"المنتصف متجهة لليسار"
+      }[point] || "نقطة";
+
+      instvResultOut.innerHTML =
+        "🧭 <b>إدخالك:</b><br>" +
+        "• النقطة: <b>"+pointName+"</b><br>" +
+        "• Δx = <b>"+dx.toFixed(2)+" m</b> ، Δt = <b>"+dt.toFixed(2)+" s</b><br><br>" +
+        "✅ <b>السرعة اللحظية (تقريبًا):</b> <b>"+(isFinite(v)?v.toFixed(2):"—")+"</b> m/s<br>" +
+        "➡️ <b>الاتجاه:</b> "+dir+"<br><br>" +
+        "ملاحظة: في الحركة الاهتزازية تكون السرعة = 0 عند القمة والقاع، وتكون أكبر ما يمكن قرب المنتصف.";
+      const aiOutBox = document.getElementById("aiOut");
+      if(aiOutBox) aiOutBox.innerHTML = "🧭 <b>نتيجة تجربة متجهات السرعة اللحظية</b><br><br>" + instvResultOut.innerHTML;
+    });
+  }// integrate with existing chapter switching (if present)
+  // If your app exposes currentChapter.id and updateLabForChapter(), we hook into it safely.
+  // We also try to detect when chapter 2 is active by URL hash or selected chapter buttons if currentChapter isn't global.
+  function tryShowCh2(){
+    // If there is a global currentChapter (as in the original file), prefer it
+    try{
+      if(typeof currentChapter !== 'undefined' && currentChapter && currentChapter.id){
+        const isCh2 = currentChapter.id === 'ch2';
+        if(ch2LabContent) ch2LabContent.classList.toggle('hidden', !isCh2);
+        const defaultLabContent = document.getElementById('defaultLabContent');
+        if(defaultLabContent) defaultLabContent.classList.toggle('hidden', isCh2);
+        if(isCh2) resetCh2();
+      }
+    }catch(e){}
+  }
+
+  // Run once and also after any tab click (common in this file)
+  tryShowCh2();
+  document.addEventListener('click', function(ev){
+    const t = ev.target;
+    if(!t) return;
+    // common selectors for chapter cards/tabs/buttons
+    if(t.matches('.card, .tab, button, .chip')){
+      setTimeout(tryShowCh2, 0);
+    }
+  });
+
+});
+</script>
+
+<!-- =========================
+     Mascot + Speech Bubble (MP4)
+     v4 (post-v3 requested behavior)
+========================== -->
+<style>
+  .mascot-wrap{
+    position: fixed;
+    z-index: 99999;
+    display: none;              /* shown via JS */
+    align-items: flex-end;
+    gap: 12px;
+    pointer-events: none;       /* clicks go to page */
+    direction: ltr;             /* keep layout predictable with RTL page */
+    transition: top .25s ease, right .25s ease, bottom .25s ease, left .25s ease, transform .25s ease, opacity .2s ease;
+  }
+
+  /* RIGHT side: mascot hugs the right edge, bubble goes inward (to the left) */
+  .side-right{ flex-direction: row-reverse; }
+
+  /* LEFT side: mascot hugs the left edge, bubble goes inward (to the right) */
+  .side-left{  flex-direction: row; }
+
+  /* Video (NO shadow, NO border, NO background) so it blends on white pages */
+  .mascot-video{
+    width: 96px;
+    height: 96px;
+    object-fit: contain;
+    border-radius: 0;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: 0 !important;
+    filter: none !important;
+  }
+
+  /* Bubble */
+  .mascot-bubble{
+    max-width: min(300px, 72vw);
+    direction: rtl;
+    background: rgba(255,255,255,.95);
+    color: var(--ink, #0b3c5d);
+    border: 2px solid rgba(125,211,252,.55);
+    border-radius: 18px;
+    padding: 12px 14px;
+    line-height: 1.5;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 800;
+    box-shadow: 0 14px 30px rgba(11,60,93,.14);
+    pointer-events: none;
+    position: relative;
+    transform: translateY(-18px);
+  }
+  /* Bubble tail removed */
+
+  .mascot-bubble::after{ content: none !important; display: none !important; }
+
+  /* Positions */
+  .pos-wave{   right: 10px; bottom: 14px; }
+  .pos-peek{   right: -13px;  top: 38%; transform: translateY(-38%); }
+  .pos-think{  left:  6px;  top: 46%; transform: translateY(-46%); }
+  .pos-jump{   right: 6px;  top: 70%; transform: translateY(-70%); }
+  .pos-clap{   left:  10px; bottom: 14px; }
+
+  @media (max-width: 600px){
+    .mascot-video{ width: 78px; height: 78px; }
+    .mascot-bubble{ font-size: 14px; max-width: 78vw; }
+    .pos-jump{ top: 62%; transform: translateY(-62%); }
+  }
+</style>
+
+<div id="mascotWrap" class="mascot-wrap pos-wave side-right" aria-live="polite">
+  <!-- Mascot must be on the EDGE (video), bubble inward next to it -->
+  <video id="mascotVideo" class="mascot-video" autoplay loop muted playsinline></video>
+  <div id="mascotBubble" class="mascot-bubble"><span id="mascotText">جاهزة للانطلاق؟ لنبدأ 🚀</span></div>
+</div>
+
+<script>
+/* =========================
+   Mascot system (MP4)
+   (All changes requested AFTER v3)
+   - NO X button
+   - Mascot hides when user clicks ANY OTHER button
+   - Wave only on HOME (before choosing any chapter)
+   - Peek on LAB tab
+   - Jump on running experiments
+   - Think on hint
+   - Clap on "حلل و اشرح"
+   - Mascot is always on the edge; bubble inward beside it (right/left handled)
+========================== */
+(function(){
+  const wrap   = document.getElementById('mascotWrap');
+  const video  = document.getElementById('mascotVideo');
+  const textEl = document.getElementById('mascotText');
+
+  if(!wrap || !video || !textEl) return;
+
+  const SCENES = {
+    wave:  { src: 'assets/mascot/wave.mp4',  pos: 'pos-wave',  side: 'right',
+      lines: ['جاهزة للانطلاق؟ لنبدأ 🚀','يلا نبدأ بحماس 🔥','بداية قوية… خطوة خطوة ✨'] },
+    peek:  { src: 'assets/mascot/peek.mp4',  pos: 'pos-peek',  side: 'right',
+      lines: ['جاهزة؟ لنكتشف 👀','اليوم دوركِ لتصبحي عالمة 🔥','جاهزة للتجربة؟ 🚀'] },
+    think: { src: 'assets/mascot/think.mp4', pos: 'pos-think', side: 'left',
+      lines: ['ركزي لتجدي الحل 🤔','تركيز بسيط وبتضبط ✨','كل محاولة تقرّبك 🔥'] },
+    jump:  { src: 'assets/mascot/jump.mp4',  pos: 'pos-jump',  side: 'right',
+      lines: ['تعلمنا شيء مهم اليوم! 🎉','شغل ممتاز 🔥','يلا نشوف النتيجة 🚀'] },
+    clap:  { src: 'assets/mascot/clap.mp4',  pos: 'pos-clap',  side: 'left',
+      lines: ['أحسنتِ 👏','تقدّم رهيب 🔥','ممتاز… كمّلي 👏'] },
+  };
+
+  function rand(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+  function applyPos(scene){
+    wrap.classList.remove('pos-wave','pos-peek','pos-think','pos-jump','pos-clap');
+    wrap.classList.add(scene.pos);
+
+    wrap.classList.remove('side-right','side-left');
+    wrap.classList.add(scene.side === 'left' ? 'side-left' : 'side-right');
+  }
+
+  function show(type){
+    const scene = SCENES[type];
+    if(!scene) return;
+    applyPos(scene);
+    textEl.textContent = rand(scene.lines);
+
+    // force reload to restart quickly (some browsers keep last frame)
+    if(video.getAttribute('src') !== scene.src){
+      video.setAttribute('src', scene.src);
+    }else{
+      try{ video.currentTime = 0; }catch(e){}
+    }
+    // ensure it plays
+    try{ video.play(); }catch(e){}
+
+    wrap.style.display = 'flex';
+    wrap.style.opacity = '1';
+    wrap.dataset.last = type;
+  }
+
+  function hide(){
+    wrap.style.opacity = '0';
+    wrap.style.display = 'none';
+  }
+
+  function isHomeVisible(){
+    const home = document.getElementById('homeView');
+    const ch   = document.getElementById('chapterView');
+    if(!home) return false;
+    // Home is visible when it doesn't have "hidden"
+    const homeOn = !home.classList.contains('hidden');
+    // If chapter view is visible, it's not home
+    const chOn = ch && !ch.classList.contains('hidden');
+    return homeOn && !chOn;
+  }
+
+  // ===== initial =====
+  if(isHomeVisible()) show('wave'); else hide();
+
+  // ===== hooks into navigation =====
+  // Patch openChapter/goHome if they exist (safe)
+  function patch(name, afterFn){
+    const fn = window[name];
+    if(typeof fn !== 'function') return;
+    if(fn.__mascotPatched) return;
+    const wrapped = function(){
+      const r = fn.apply(this, arguments);
+      try{ afterFn.apply(this, arguments); }catch(e){}
+      return r;
+    };
+    wrapped.__mascotPatched = true;
+    window[name] = wrapped;
+  }
+
+  patch('openChapter', function(){
+    // leaving home -> hide wave immediately
+    hide();
+  });
+
+  patch('goHome', function(){
+    // back to home -> show wave
+    show('wave');
+  });
+
+  // About page back to home
+  const backFromAbout = document.getElementById('backFromAbout');
+  if(backFromAbout){
+    backFromAbout.addEventListener('click', function(){
+      setTimeout(function(){ if(isHomeVisible()) show('wave'); }, 0);
+    });
+  }
+
+  // Home button
+  const goHomeBtn = document.getElementById('goHomeBtn');
+  if(goHomeBtn){
+    goHomeBtn.addEventListener('click', function(){
+      setTimeout(function(){ if(isHomeVisible()) show('wave'); }, 0);
+    });
+  }
+
+  // ===== specific triggers =====
+  const hintBtn  = document.getElementById('hintBtn');
+  const solveBtn = document.getElementById('solveBtn');
+
+  if(hintBtn)  hintBtn.addEventListener('click', function(e){ show('think'); });
+  if(solveBtn) solveBtn.addEventListener('click', function(e){ show('clap'); });
+
+  // Any "run" experiment button -> jump
+  const runBtnIds = ['runFallBtn','runSpringBtn','runCarsBtn','runInstVBtn','runLabBtn'];
+  runBtnIds.forEach(id=>{
+    const b = document.getElementById(id);
+    if(b) b.addEventListener('click', function(e){ show('jump'); });
+  });
+
+  // Tabs:
+  // - lab tab -> peek
+  // - others -> hide (unless home)
+  document.querySelectorAll('.tab').forEach(tab=>{
+    tab.addEventListener('click', function(){
+      const tabName = this.getAttribute('data-tab');
+      setTimeout(function(){
+        if(isHomeVisible()){
+          show('wave');
+          return;
+        }
+        if(tabName === 'lab') show('peek');
+        else hide();
+      }, 0);
+    });
+  });
+
+  // ===== hide on ANY OTHER button =====
+  const triggerButtons = new Set([
+    'hintBtn','solveBtn',
+    'runFallBtn','runSpringBtn','runCarsBtn','runInstVBtn','runLabBtn',
+    'goHomeBtn','backFromAbout'
+  ]);
+
+  document.addEventListener('click', function(ev){
+    const btn = ev.target && ev.target.closest ? ev.target.closest('button') : null;
+    if(!btn) return;
+
+    const id = btn.getAttribute('id') || '';
+    // Let trigger buttons do their thing
+    if(triggerButtons.has(id)) return;
+
+    // Chapter selection cards are DIVs, so not captured here.
+    // Any other button click => hide mascot.
+    hide();
+  }, true);
+
+  // ===== hide wave when user picks any chapter card (click card) =====
+  document.addEventListener('click', function(ev){
+    const card = ev.target && ev.target.closest ? ev.target.closest('.card') : null;
+    if(card){
+      // selecting chapter
+      hide();
+    }
+  }, true);
+
+  // Expose for debugging if needed
+  window.__showMascot = show;
+  window.__hideMascot = hide;
+})();
+</script>
+
+</body>
+</html>
